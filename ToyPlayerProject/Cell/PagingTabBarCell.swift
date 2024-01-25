@@ -11,7 +11,7 @@ import UIKit
 class PagingTabBarCell: UICollectionViewCell{
     static let identifier = "PagingTabBarCell"
     
-    private lazy var titleLabel : UILabel = {
+    var titleLabel : UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 15.0, weight: .semibold)
         label.textColor = .lightGray
@@ -19,7 +19,7 @@ class PagingTabBarCell: UICollectionViewCell{
         return label
     }()
     
-    private lazy var underline: UIView = {
+    var underline: UIView = {
         let view = UIView()
         view.backgroundColor = .black
         view.alpha = 0.0

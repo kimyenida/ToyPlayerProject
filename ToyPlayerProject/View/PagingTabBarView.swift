@@ -20,7 +20,7 @@ class PagingTabBarView: UIView{
     
     weak var delegate: PagingTabBarProtocol?
     
-    lazy var mycollectionView: UICollectionView = {
+    lazy var tabBarCollectionView: UICollectionView = {
        let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
               
@@ -43,7 +43,7 @@ class PagingTabBarView: UIView{
         super.init(frame: .zero)
 
         setupLayout()
-        mycollectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: [])
+        tabBarCollectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: [])
     }
     
     required init?(coder: NSCoder) {
@@ -55,6 +55,7 @@ extension PagingTabBarView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.didTapPagingTabBarCell(scrollTo: indexPath)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -87,11 +88,11 @@ extension PagingTabBarView: UICollectionViewDataSource{
 
 private extension PagingTabBarView{
     func setupLayout(){
-        addSubview(mycollectionView)
-        mycollectionView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([mycollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-                                     mycollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-                                     mycollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-                                     mycollectionView.topAnchor.constraint(equalTo: self.topAnchor)])
+        addSubview(tabBarCollectionView)
+        tabBarCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([tabBarCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+                                     tabBarCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+                                     tabBarCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+                                     tabBarCollectionView.topAnchor.constraint(equalTo: self.topAnchor)])
     }
 }

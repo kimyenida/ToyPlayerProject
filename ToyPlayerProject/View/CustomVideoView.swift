@@ -13,10 +13,18 @@ class CustomVideoView: UIView{
     private lazy var pagingTabBar = PagingTabBarView(categoryTitleList: categoryTitleList)
     private lazy var pagingView = PagingView(pagingTabBar: pagingTabBar)
     
+    var programLabel: UILabel = {
+        var label = UILabel()
+        label.textColor = .black
+        label.text = "test label"
+        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+        return label
+    }()
     override init(frame: CGRect) {
         super.init(frame: .zero)
         self.backgroundColor = .white
         setupLayout()
+        pagingView.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -27,11 +35,18 @@ private extension CustomVideoView{
     func setupLayout(){
         self.addSubview(pagingTabBar)
         self.addSubview(pagingView)
+        self.addSubview(programLabel)
         
         pagingView.translatesAutoresizingMaskIntoConstraints = false
         pagingTabBar.translatesAutoresizingMaskIntoConstraints = false
+        programLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([pagingTabBar.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+        NSLayoutConstraint.activate([programLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+                                     programLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+                                     programLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+                                     programLabel.heightAnchor.constraint(equalToConstant: 30),
+                                     
+                                     pagingTabBar.topAnchor.constraint(equalTo: self.programLabel.bottomAnchor),
                                      pagingTabBar.leadingAnchor.constraint(equalTo: self.leadingAnchor),
                                      pagingTabBar.trailingAnchor.constraint(equalTo: self.trailingAnchor),
                                      pagingTabBar.heightAnchor.constraint(equalToConstant: pagingTabBar.cellheight),
@@ -41,4 +56,16 @@ private extension CustomVideoView{
                                      pagingView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
                                      pagingView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)])
     }
+}
+
+extension CustomVideoView: PagingViewProtocol{
+    func changeProgramLabel(data:ChannelInfo) {
+        guard let typetitle = data.typeTitle, let title = data.title else {
+            return
+        }
+        programLabel.text = "\(typetitle) - \(title)"
+
+    }
+    
+    
 }

@@ -13,6 +13,13 @@ protocol PagingViewCellProtocol{
     func refreshCell()
 }
 
+enum Dimension {
+    static let tabHeight: CGFloat = 65
+    static let bannerRatio: CGFloat = 107/374
+    static let contentHeight: CGFloat = 168
+    static let contentSpacing: CGFloat = 14
+}
+
 class PagingViewCell: UICollectionViewCell{
     
     var delegate: PagingViewCellProtocol?
@@ -25,13 +32,13 @@ class PagingViewCell: UICollectionViewCell{
     private var channelData : [ChannelInfo] = [] {
         didSet{
             DispatchQueue.main.async{
-                self.myview.reloadData()
+                self.videoCollectionView.reloadData()
             }
         }
     }
     static let identifier = "PagingViewCell"
     
-    var myview : UICollectionView = {
+    var videoCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
     
         layout.scrollDirection = .vertical
@@ -53,15 +60,15 @@ class PagingViewCell: UICollectionViewCell{
         super.init(frame: frame)
         setupLayout()
         
-        myview.register(VideoCell.self, forCellWithReuseIdentifier: VideoCell.reuseId)
-        myview.delegate = self
-        myview.dataSource = self
+        videoCollectionView.register(VideoCell.self, forCellWithReuseIdentifier: VideoCell.reuseId)
+        videoCollectionView.delegate = self
+        videoCollectionView.dataSource = self
         if #available(iOS 10.0, *){
-            myview.refreshControl = refreshControl
+            videoCollectionView.refreshControl = refreshControl
         } else{
-            myview.addSubview(refreshControl)
+            videoCollectionView.addSubview(refreshControl)
         }
-        myview.refreshControl?.addTarget(self, action: #selector(refreshView), for: .valueChanged)
+        videoCollectionView.refreshControl?.addTarget(self, action: #selector(refreshView), for: .valueChanged)
 
     }
     
@@ -77,7 +84,7 @@ class PagingViewCell: UICollectionViewCell{
     private func refreshView(){
         DispatchQueue.main.async {
             self.delegate?.refreshCell()
-            self.myview.refreshControl?.endRefreshing()
+            self.videoCollectionView.refreshControl?.endRefreshing()
         }
     }
     
@@ -87,12 +94,12 @@ class PagingViewCell: UICollectionViewCell{
 }
 extension PagingViewCell{
     private func setupLayout(){
-        contentView.addSubview(myview)
-        myview.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([myview.topAnchor.constraint(equalTo: contentView.topAnchor),
-                                     myview.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-                                     myview.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                                     myview.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)])
+        contentView.addSubview(videoCollectionView)
+        videoCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([videoCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
+                                     videoCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+                                     videoCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+                                     videoCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)])
 
     }
 }
@@ -112,14 +119,14 @@ extension PagingViewCell: UICollectionViewDelegate, UICollectionViewDataSource, 
         
         if PagingView.selectedIndex == PagingView.currentTab && PagingView.selectedscode == items.scheduleCode{
             cell.setSelected(true)
-            myview.selectItem(at: indexPath, animated: false, scrollPosition: .init())
+            videoCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
         }
         
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (collectionView.frame.width - 20 - 20 - 14)/2
-        return CGSize(width: width, height: 168)
+        return CGSize(width: width, height: Dimension.contentHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -127,7 +134,7 @@ extension PagingViewCell: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 14
+        return Dimension.contentSpacing
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

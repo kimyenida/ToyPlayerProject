@@ -44,7 +44,6 @@ class PagingViewModel{
     }
     
     private func requestMbicChannelList(_ completion: @escaping () -> Void) {
-        print("requestMbicChannelList() called")
         networking.getMbicChannelList { [weak self] response in
             guard let `self` = self else { return }
             // - Set Data
@@ -67,8 +66,6 @@ class PagingViewModel{
     }
     
     private func requestOnAirChannelList(_ completion: @escaping () -> Void) {
-        print("requestOnAirChannelList() called")
-
         networking.getChannelList() { [weak self] response in
             guard let `self` = self else { return }
             // - Set Data

@@ -8,6 +8,10 @@
 import Foundation
 import UIKit
 
+protocol PagingViewProtocol{
+    func changeProgramLabel(data: ChannelInfo)
+}
+
 class PagingView: UIView{
     static var selectedIndex = 0 // 선택된 탭 위치, 기본은 onAir
     static var selectedscode = "MBC" //
@@ -17,6 +21,7 @@ class PagingView: UIView{
     private let viewModel = PagingViewModel()
     
     var initialContentOffset : CGFloat = 0.0
+    var delegate : PagingViewProtocol?
     
     private lazy var screenCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -80,14 +85,13 @@ extension PagingView: UICollectionViewDelegateFlowLayout{
     }
 
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let distance = abs(targetContentOffset.pointee.x - initialContentOffset)
         
+        let distance = abs(targetContentOffset.pointee.x - initialContentOffset)
         if distance < UIScreen.main.bounds.width { // 스크롤이 다음 셀로 넘어가지 않은경우, return
             return
         }
         let indexPath = IndexPath(row: Int(targetContentOffset.pointee.x / UIScreen.main.bounds.width), section: 0)
-        pagingTabBar.mycollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
-
+        pagingTabBar.tabBarCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
         PagingView.currentTab = indexPath.item
 
         refreshCell()
@@ -117,7 +121,6 @@ extension PagingView: PagingTabBarProtocol{
         }
         screenCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
         PagingView.currentTab = indexPath.item
-        print("didTapPagingTabBarCell() called")
         refreshCell()
     }
 }
@@ -138,6 +141,7 @@ extension PagingView: PagingViewModelProtocol{
         DispatchQueue.main.async {
             UIView.animate(withDuration: 1) {
                 self.screenCollectionView.reloadData()
+                self.delegate?.changeProgramLabel(data: self.viewModel.tvList[0])
             }
         }
     }
@@ -145,7 +149,6 @@ extension PagingView: PagingViewModelProtocol{
 
 extension PagingView: PagingViewCellProtocol{
     func refreshCell() {
-        print("delegate refreshCell() called")
         self.viewModel.refreshData(code: PagingView.currentTab)
     }
     
@@ -154,8 +157,8 @@ extension PagingView: PagingViewCellProtocol{
             let selectedIndexPath = IndexPath(item: prevSelectedIndex, section: indexPath.section)
             for cell in self.screenCollectionView.visibleCells{
                 if let cell = cell as? PagingViewCell{
-                    cell.myview.cellForItem(at: selectedIndexPath)?.isSelected = false
-                    cell.myview.deselectItem(at: selectedIndexPath, animated: false)
+                    cell.videoCollectionView.cellForItem(at: selectedIndexPath)?.isSelected = false
+                    cell.videoCollectionView.deselectItem(at: selectedIndexPath, animated: false)
                 }
             }
         }
@@ -168,6 +171,7 @@ extension PagingView: PagingViewCellProtocol{
             PagingView.currentTab = (chInfo.type == "NVOD") ? 1 : 0
             PagingView.selectedIndex = PagingView.currentTab
             PagingView.selectedscode = newScode
+            self.delegate?.changeProgramLabel(data: chInfo)
         }
     }
     
