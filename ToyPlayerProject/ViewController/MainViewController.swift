@@ -68,18 +68,15 @@ class MainViewController: UIViewController{
         return button
     }()
 
-    var underView: CustomVideoView = {
-       var view = CustomVideoView()
-        return view
-    }()
+    var underView: CustomVideoView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        self.view.backgroundColor = .white
+        self.underView = CustomVideoView()
+        self.viewModel?.delegate = self
 
-        viewModel?.delegate = self
-
-        addObservers()
+        self.addObservers()
         self.setVideoPlayer()
     }
   

@@ -44,7 +44,7 @@ class PagingView: UIView{
         setupLayout()
         pagingTabBar.delegate = self
         viewModel.delegate = self
-        viewModel.requestData()
+        viewModel.refreshData(isFirst: true, code: PagingView.currentTab)
     }
     
     required init?(coder: NSCoder) {
@@ -126,13 +126,11 @@ extension PagingView: PagingTabBarProtocol{
 }
 
 extension PagingView: PagingViewModelProtocol{
-    func viewRefresh(code:Int) {
+    func viewRefresh(data:[ChannelInfo]) {
         DispatchQueue.main.async {
-            let indexPathToUpdate = IndexPath(item: code, section: 0)
             for cell in self.screenCollectionView.visibleCells{
                 if let cell = cell as? PagingViewCell{
-                    let data = (indexPathToUpdate.item == 0) ? self.viewModel.tvList : self.viewModel.mbicList
-                    cell.setupMyview(data: data)
+                    cell.setupMyview(data: data) // data는 tvList 혹은 mbicList
                 }
             }
         }
@@ -149,7 +147,7 @@ extension PagingView: PagingViewModelProtocol{
 
 extension PagingView: PagingViewCellProtocol{
     func refreshCell() {
-        self.viewModel.refreshData(code: PagingView.currentTab)
+        self.viewModel.refreshData(isFirst: false, code: PagingView.currentTab)
     }
     
     func cellSelected(indexPath: IndexPath) {

@@ -9,7 +9,7 @@ import Foundation
 
 protocol PagingViewModelProtocol{
     func viewUpdate()
-    func viewRefresh(code:Int)
+    func viewRefresh(data:[ChannelInfo])
 }
 class PagingViewModel{
     private var channelList : [ChannelInfo] = []
@@ -23,22 +23,20 @@ class PagingViewModel{
     
     var delegate : PagingViewModelProtocol?
     
-    func requestData(){
-        self.requestOnAirChannelList {
-            self.requestMbicChannelList {
+    func refreshData(isFirst: Bool, code: Int){
+        if isFirst == true{
+            self.requestOnAirChannelList {
                 self.delegate?.viewUpdate()
             }
+            return
         }
-    }
-    
-    func refreshData(code: Int){
         if code == 0{
             self.requestOnAirChannelList{
-                self.delegate?.viewRefresh(code: code)
+                self.delegate?.viewRefresh(data: self.tvList)
             }
         } else{
             self.requestMbicChannelList {
-                self.delegate?.viewRefresh(code: code)
+                self.delegate?.viewRefresh(data: self.mbicList)
             }
         }
     }

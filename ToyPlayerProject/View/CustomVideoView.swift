@@ -10,8 +10,11 @@ import UIKit
 
 class CustomVideoView: UIView{
     private let categoryTitleList = [ "온에어", "엠빅"]
-    private lazy var pagingTabBar = PagingTabBarView(categoryTitleList: categoryTitleList)
-    private lazy var pagingView = PagingView(pagingTabBar: pagingTabBar)
+//    private lazy var pagingTabBar = PagingTabBarView(categoryTitleList: categoryTitleList)
+//    private lazy var pagingView = PagingView(pagingTabBar: pagingTabBar)
+    
+    var pagingTabBar : PagingTabBarView!
+    var pagingView : PagingView!
     
     var programLabel: UILabel = {
         var label = UILabel()
@@ -20,9 +23,12 @@ class CustomVideoView: UIView{
         label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         return label
     }()
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         self.backgroundColor = .white
+        pagingTabBar = PagingTabBarView(categoryTitleList: categoryTitleList)
+        pagingView = PagingView(pagingTabBar: pagingTabBar)
         setupLayout()
         pagingView.delegate = self
     }
