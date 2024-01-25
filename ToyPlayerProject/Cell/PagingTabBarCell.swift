@@ -6,3 +6,63 @@
 //
 
 import Foundation
+import UIKit
+
+class PagingTabBarCell: UICollectionViewCell{
+    static let identifier = "PagingTabBarCell"
+    
+    private lazy var titleLabel : UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 15.0, weight: .semibold)
+        label.textColor = .lightGray
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var underline: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.alpha = 0.0
+        return view
+    }()
+    
+    override var isSelected: Bool{
+        didSet{
+            titleLabel.textColor = isSelected ? .black : .lightGray
+            underline.alpha = isSelected ? 1.0 : 0.0
+        }
+    }
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupLayout()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupView(title: String){
+        titleLabel.text = title
+    }
+}
+
+private extension PagingTabBarCell{
+    func setupLayout(){
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(underline)
+        
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        underline.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+                                     titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+                                 ])
+        
+        NSLayoutConstraint.activate([underline.heightAnchor.constraint(equalToConstant: 3.0),
+                                     underline.widthAnchor.constraint(equalTo: titleLabel.widthAnchor),
+                                     underline.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4.0),
+                                     underline.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+                                     underline.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+                                     underline.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)])
+    }
+}

@@ -1,5 +1,5 @@
 //
-//  MainVC.swift
+//  MainViewController.swift
 //  ToyPlayerProject
 //
 //  Created by Admin iMBC on 1/18/24.
@@ -10,7 +10,7 @@ import AVFoundation
 import UIKit
 import AVKit
 
-class MainVC: UIViewController{
+class MainViewController: UIViewController{
     private var player: AVPlayer?
     private var playerLayer: AVPlayerLayer?
     private let links = [TestVideoLinks.link1,TestVideoLinks.link2,TestVideoLinks.link3]
@@ -159,7 +159,7 @@ class MainVC: UIViewController{
 
 }
 
-extension MainVC{
+extension MainViewController{
     private func setVideoPlayer(){
        
         guard let url = URL(string: TestVideoLinks.link2) else {return}
@@ -255,7 +255,7 @@ extension MainVC{
 }
 
 
-extension MainVC: PlayerViewModelProtocol{
+extension MainViewController: PlayerViewModelProtocol{
     func changSliderValue(_ value: Float) {
         self.slider.value = value
     }

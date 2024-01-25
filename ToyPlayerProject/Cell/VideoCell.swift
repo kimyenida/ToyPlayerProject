@@ -11,78 +11,86 @@ import UIKit
 class VideoCell: UICollectionViewCell{
     static let reuseId = "VideoCell"
 
-    var myImageView : UIImageView = {
-       var view = UIImageView()
+    
+    var thumbnailImageView : CustomImageView = {
+        var view = CustomImageView(frame: .zero)
         view.contentMode = .scaleAspectFit
         return view
     }()
     var titlelb: UILabel = {
-       var label = UILabel()
+        var label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         label.sizeToFit()
         label.textColor = .black
         label.numberOfLines = 0
-
+        
         return label
     }()
     var sublb: UILabel = {
-       var label = UILabel()
+        var label = UILabel()
         label.font = UIFont.systemFont(ofSize: 10)
         label.sizeToFit()
         label.textColor = .darkGray
         label.numberOfLines = 0
-
+        
         return label
     }()
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupUI()
-
+        setupLayout()
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
     
-    func configure(title:String, sub:String, imagelink: String?){
-        guard let imagelink = imagelink else { return }
-        guard let url = URL(string: imagelink) else { return }
-        titlelb.text = title
-        sublb.text = sub
-        DispatchQueue.global().async {
-            if let data = try? Data(contentsOf: url){
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self.myImageView.image = image
-                    }
-                }
-            }
+    override var isSelected: Bool {
+        willSet {
+            setSelected(newValue)
         }
     }
     
-    func setupUI(){
-        self.addSubview(titlelb)
-        self.addSubview(sublb)
-        self.addSubview(myImageView)
+    func setSelected(_ isSelected: Bool) {
+        if isSelected {
+            thumbnailImageView.layer.borderWidth = 4
+        }
+        else {
+            thumbnailImageView.layer.borderWidth = 0
+        }
+    }
+    
+    func configure(title:String, sub:String, imagelink: String?){
+        guard let imagelink = imagelink else { return }
+        titlelb.text = title
+        sublb.text = sub
+        thumbnailImageView.loadImage(imageUrl: imagelink)
+    }
+    
+    private func setupLayout(){
+        contentView.addSubview(titlelb)
+        contentView.addSubview(sublb)
+        contentView.addSubview(thumbnailImageView)
         
         titlelb.translatesAutoresizingMaskIntoConstraints = false
         sublb.translatesAutoresizingMaskIntoConstraints = false
-        myImageView.translatesAutoresizingMaskIntoConstraints = false
+        thumbnailImageView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([myImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 1),
-                                     myImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
-                                     myImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 5),
-                                     myImageView.heightAnchor.constraint(equalToConstant: 80)])
+        NSLayoutConstraint.activate([thumbnailImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+                                     thumbnailImageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 100/contentView.bounds.height),
+                                     thumbnailImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+                                     thumbnailImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+                                    ])
         
-        NSLayoutConstraint.activate([titlelb.topAnchor.constraint(equalTo: myImageView.bottomAnchor),
-                                     titlelb.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-                                     titlelb.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 5),
-                                    
-                                     sublb.topAnchor.constraint(equalTo: titlelb.bottomAnchor),
-                                     sublb.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-                                     sublb.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 5)])
+        NSLayoutConstraint.activate([titlelb.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+                                     titlelb.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+                                     titlelb.topAnchor.constraint(equalTo: thumbnailImageView.bottomAnchor),
+                                     
+                                     
+                                     sublb.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+                                     sublb.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+                                     sublb.topAnchor.constraint(equalTo: titlelb.bottomAnchor, constant: 3)])
     }
 }

@@ -8,9 +8,15 @@
 import Foundation
 import UIKit
 
+protocol PagingViewCellProtocol{
+    func cellSelected(indexPath: IndexPath)
+    func refreshCell()
+}
 
 class PagingViewCell: UICollectionViewCell{
-        
+    
+    var delegate: PagingViewCellProtocol?
+    
     var refreshControl : UIRefreshControl = {
        var refresh = UIRefreshControl()
         return refresh
@@ -66,11 +72,11 @@ class PagingViewCell: UICollectionViewCell{
     func setupMyview(data: [ChannelInfo]){
         self.channelData = data
     }
+    
     @objc
     private func refreshView(){
-        
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: .refreshHandler, object: nil)
+            self.delegate?.refreshCell()
             self.myview.refreshControl?.endRefreshing()
         }
     }
@@ -101,11 +107,14 @@ extension PagingViewCell: UICollectionViewDelegate, UICollectionViewDataSource, 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VideoCell.reuseId, for: indexPath) as! VideoCell
         let items = channelData[indexPath.item]
         if let title = items.title, let typetitle = items.typeTitle, let image = items.onAirImage{
-
             cell.configure(title: typetitle, sub: title, imagelink: image )
         }
-        collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
-
+        
+        if PagingView.selectedIndex == PagingView.currentTab && PagingView.selectedscode == items.scheduleCode{
+            cell.setSelected(true)
+            myview.selectItem(at: indexPath, animated: false, scrollPosition: .init())
+        }
+        
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -125,6 +134,9 @@ extension PagingViewCell: UICollectionViewDelegate, UICollectionViewDataSource, 
         return 0
     }
 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.cellSelected(indexPath: indexPath)
+    }
 }
 
 

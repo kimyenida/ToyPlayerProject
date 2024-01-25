@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+
+extension String{
+    func applySSL() -> String {
+        return self.replacingOccurrences(of: "http:", with: "https:")
+    }
+}

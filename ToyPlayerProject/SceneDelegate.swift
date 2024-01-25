@@ -15,9 +15,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        let mainViewController = PlayerNewViewController()
+        let mainViewController = MainViewController()
         let mainViewModel = PlayerNewViewModel()
         mainViewController.viewModel = mainViewModel
+        
+//        let mainViewController = OnAirVC()
         window?.rootViewController = mainViewController
         window?.makeKeyAndVisible()
     }

@@ -10,14 +10,15 @@ import AVFoundation
 import UIKit
 import AVKit
 
-class PlayerNewViewController: UIViewController{
-    private let videoURL = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-    
+class PlayerNewViewController: UIViewController{    
     private var player: AVPlayer?
     private var playerLayer: AVPlayerLayer?
+    private let links = [TestVideoLinks.link1,TestVideoLinks.link2,TestVideoLinks.link3]
     
+    var heightConstraint: NSLayoutConstraint?
+
     var viewModel: PlayerNewViewModel?
-    
+
     private var videoBackgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
@@ -67,127 +68,132 @@ class PlayerNewViewController: UIViewController{
         return button
     }()
 
+    private var myTableView: UITableView = {
+        var view = UITableView()
+        view.backgroundColor = .white
+        return view
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        self.setVideoPlayer()
-        self.setUI()
+
         viewModel?.delegate = self
+
+        addObservers()
+        self.setVideoPlayer()
     }
+  
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         player?.play()
     }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         playerLayer?.frame = videoBackgroundView.bounds
     }
-
-    private var timeObserver : Any? = nil
-    private func setObserverToPlayer(){
-        // 0.3초마다 Player가 반응하게
-        let interval = CMTime(seconds: 0.3, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-        timeObserver = player?.addPeriodicTimeObserver(forInterval: interval, queue: .main, using: {elapsed in
-            self.viewModel?.updateSliderTime(elapsed, player: self.player)
-            //self.updatePlayerTime(elapsed)
+    
+    private var windowInterface : UIInterfaceOrientation? {
+        return self.view.window?.windowScene?.interfaceOrientation
+    }
+    
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        guard let windowInterface = self.windowInterface else{ return }
+        if windowInterface.isPortrait == true {
+            heightConstraint?.constant = 196
+        } else {
+            heightConstraint?.constant = self.view.bounds.width
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+            self.playerLayer?.frame = self.videoBackgroundView.bounds
         })
     }
-    
-    private func updatePlayerTime(_ currentTime : CMTime){
-        guard let currentTime = self.player?.currentTime() else { return }
-        guard let duration = self.player?.currentItem?.duration else { return }
-
-        let currentTimeInSecond = CMTimeGetSeconds(currentTime)
-        let durationTimeInSecond = CMTimeGetSeconds(duration)
-        
-        if self.isTumbSeek == false{
-            self.slider.value = Float(currentTimeInSecond/durationTimeInSecond)
-        }
-        
-        let value = Float64(self.slider.value) * CMTimeGetSeconds(duration)
-
-        var hours = value / 3600
-        var mins = value / 60
-        var secs = value.truncatingRemainder(dividingBy: 60)
-        var timeformatter = NumberFormatter()
-        timeformatter.minimumIntegerDigits = 2
-        timeformatter.minimumFractionDigits = 0
-        timeformatter.roundingMode = .down
-        guard let housStr = timeformatter.string(from: NSNumber(value: hours)), let minStr = timeformatter.string(from: NSNumber(value: mins)), let secsStr = timeformatter.string(from: NSNumber(value: secs)) else {
-            return
-        }
-        self.lLabel.text = "\(housStr):\(minStr):\(secsStr)"
-        
-        
-        hours = durationTimeInSecond / 3600
-        mins = durationTimeInSecond / 60
-        secs = durationTimeInSecond.truncatingRemainder(dividingBy: 60)
-        timeformatter = NumberFormatter()
-        timeformatter.minimumIntegerDigits = 2
-        timeformatter.minimumFractionDigits = 0
-        timeformatter.roundingMode = .down
-        guard let housStr = timeformatter.string(from: NSNumber(value: hours)), let minStr = timeformatter.string(from: NSNumber(value: mins)), let secsStr = timeformatter.string(from: NSNumber(value: secs)) else {
-            return
-        }
-        self.rLabel.text = "\(housStr):\(minStr):\(secsStr)"
-
-
+    func addObservers(){
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(playerDidFinishPlaying),
+            name: .AVPlayerItemDidPlayToEndTime,
+            object: player?.currentItem
+        )
     }
     
-    private var isTumbSeek : Bool = false
+    func removeObservers() {
+        NotificationCenter.default.removeObserver(self,name: .AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
+    }
     
+
     @objc
     private func onTapSlider(){
-        self.isTumbSeek = true
-        guard let duration = self.player?.currentItem?.duration else { return }
-        let value = Float64(self.slider.value) * CMTimeGetSeconds(duration)
-        
-        if value.isNaN == false{ // 숫자면
-            let seekTime = CMTime(value: CMTimeValue(value), timescale: 1)
-            self.player?.seek(to: seekTime, completionHandler: { completed in
-                if completed{
-                    self.isTumbSeek = false
-                }
-            })
-        }
+        viewModel?.onTabPlayerSlider(player: self.player, sliderValue: Float64(slider.value))
     }
     
     @objc
     private func onTapBack10(){
-        guard let currentTime = self.player?.currentTime() else { return }
-        viewModel?.onTabBack10(currentTime: currentTime, player: self.player)
+        viewModel?.onTabBack10(player: self.player)
     }
     
     @objc
     private func onTapNext10(){
-        guard let currentTime = self.player?.currentTime() else { return }
-        viewModel?.onTabNext10(currentTime: currentTime, player: self.player)
+        viewModel?.onTabNext10(player: self.player)
     }
     
     @objc
     private func onTapPlay(){
         viewModel?.onTabPlay(player: self.player)
     }
+    
+    @objc
+    private func playerDidFinishPlaying(note: NSNotification) {
+        print("the end \n")
+        player?.pause()
+        //slider.value = 1
+        changeImage("pause")
+    }
+    
+    deinit{
+        print("PlayerNewViewController - deinit")
+        viewModel = nil
+        removeObservers()
+    }
 
 }
 
 extension PlayerNewViewController{
     private func setVideoPlayer(){
-        guard let url = URL(string: videoURL) else {return}
+       
+        guard let url = URL(string: TestVideoLinks.link2) else {return}
         
         self.player = AVPlayer(url: url)
         let layer = AVPlayerLayer(player: player)
         layer.videoGravity = AVLayerVideoGravity.resizeAspect
         
+        self.view.addSubview(videoBackgroundView)
+        heightConstraint = videoBackgroundView.heightAnchor.constraint(equalToConstant: 196)
+        heightConstraint?.isActive = true
+        
+        videoBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.videoBackgroundView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+            self.videoBackgroundView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
+            //self.videoBackgroundView.heightAnchor.constraint(equalToConstant: 196),
+            self.videoBackgroundView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            ])
+        
         self.videoBackgroundView.layer.addSublayer(layer)
         self.playerLayer = layer
         
-        setObserverToPlayer()
+        self.viewModel?.setObserverToPlayer(player: self.player){
+            self.setUI()
+        }
     }
     
     private func setUI(){
+        myTableView.delegate = self
+        myTableView.dataSource = self
+        myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
         slider.addTarget(self, action: #selector(onTapSlider), for: .valueChanged)
         
         back10Btn.isUserInteractionEnabled = true
@@ -198,17 +204,16 @@ extension PlayerNewViewController{
 
         playBtn.isUserInteractionEnabled = true
         playBtn.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTapPlay)))
-        
-        self.view.addSubview(videoBackgroundView)
+  
+        view.addSubview(myTableView)
         videoBackgroundView.addSubview(lLabel)
         videoBackgroundView.addSubview(rLabel)
         videoBackgroundView.addSubview(slider)
         videoBackgroundView.addSubview(playBtn)
         videoBackgroundView.addSubview(back10Btn)
         videoBackgroundView.addSubview(next10Btn)
-
-
-        videoBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        
+        myTableView.translatesAutoresizingMaskIntoConstraints = false
         lLabel.translatesAutoresizingMaskIntoConstraints = false
         rLabel.translatesAutoresizingMaskIntoConstraints = false
         slider.translatesAutoresizingMaskIntoConstraints = false
@@ -216,13 +221,10 @@ extension PlayerNewViewController{
         back10Btn.translatesAutoresizingMaskIntoConstraints = false
         next10Btn.translatesAutoresizingMaskIntoConstraints = false
 
-
-        NSLayoutConstraint.activate([
-            self.videoBackgroundView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-            self.videoBackgroundView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-            self.videoBackgroundView.heightAnchor.constraint(equalToConstant: 196),
-            self.videoBackgroundView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            ])
+        NSLayoutConstraint.activate([myTableView.topAnchor.constraint(equalTo: self.videoBackgroundView.bottomAnchor),
+                                     myTableView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+                                     myTableView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
+                                     myTableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)])
         
         NSLayoutConstraint.activate([
             lLabel.widthAnchor.constraint(equalToConstant: 50),
@@ -273,5 +275,35 @@ extension PlayerNewViewController: PlayerViewModelProtocol{
         self.playBtn.image = UIImage(systemName: kind)
     }
     
+    
+}
+
+extension PlayerNewViewController: UITableViewDelegate, UITableViewDataSource{
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return links.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = myTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
+        cell.backgroundColor = .white
+        cell.textLabel?.text = links[indexPath.row]
+        cell.textLabel?.textColor = .black
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let url = URL(string: links[indexPath.row]) else {return}
+        
+        if player?.timeControlStatus == .paused{
+            changeImage("play.circle")
+        }
+        
+        player?.pause()
+        slider.value = Float(0)
+        let playerItem = AVPlayerItem(url: url)
+        player?.replaceCurrentItem(with: playerItem)
+        player?.play()
+    }
     
 }
