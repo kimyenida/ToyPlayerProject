@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 
 protocol PagingViewCellProtocol{
-    func cellSelected(indexPath: IndexPath)
+    func nowCellSelected(indexPath: IndexPath)
+    func previousCellSelected(scode:String?, _ completion: () -> ())
     func refreshCell()
 }
 
@@ -117,10 +118,13 @@ extension PagingViewCell: UICollectionViewDelegate, UICollectionViewDataSource, 
             cell.configure(title: typetitle, sub: title, imagelink: image )
         }
         
-        if PagingView.selectedIndex == PagingView.currentTab && PagingView.selectedscode == items.scheduleCode{
+        
+        delegate?.previousCellSelected(scode: items.scheduleCode){
             cell.setSelected(true)
             videoCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
         }
+        
+
         
         return cell
     }
@@ -142,7 +146,7 @@ extension PagingViewCell: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.cellSelected(indexPath: indexPath)
+        delegate?.nowCellSelected(indexPath: indexPath)
     }
 }
 

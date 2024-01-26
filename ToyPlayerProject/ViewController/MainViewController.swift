@@ -68,7 +68,7 @@ class MainViewController: UIViewController{
         return button
     }()
 
-    var underView: CustomVideoView!
+    var underView: CustomVideoView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -198,7 +198,10 @@ extension MainViewController{
         playBtn.isUserInteractionEnabled = true
         playBtn.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTapPlay)))
   
-        self.view.addSubview(underView)
+        guard let isUnderView = self.underView else {
+            return
+        }
+        self.view.addSubview(isUnderView)
         videoBackgroundView.addSubview(lLabel)
         videoBackgroundView.addSubview(rLabel)
         videoBackgroundView.addSubview(slider)
@@ -206,7 +209,7 @@ extension MainViewController{
         videoBackgroundView.addSubview(back10Btn)
         videoBackgroundView.addSubview(next10Btn)
         
-        underView.translatesAutoresizingMaskIntoConstraints = false
+        isUnderView.translatesAutoresizingMaskIntoConstraints = false
         lLabel.translatesAutoresizingMaskIntoConstraints = false
         rLabel.translatesAutoresizingMaskIntoConstraints = false
         slider.translatesAutoresizingMaskIntoConstraints = false
@@ -214,10 +217,10 @@ extension MainViewController{
         back10Btn.translatesAutoresizingMaskIntoConstraints = false
         next10Btn.translatesAutoresizingMaskIntoConstraints = false
 
-        NSLayoutConstraint.activate([underView.topAnchor.constraint(equalTo: videoBackgroundView.bottomAnchor),
-                                     underView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-                                     underView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-                                     underView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)])
+        NSLayoutConstraint.activate([isUnderView.topAnchor.constraint(equalTo: videoBackgroundView.bottomAnchor),
+                                     isUnderView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+                                     isUnderView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+                                     isUnderView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)])
         
         
         NSLayoutConstraint.activate([

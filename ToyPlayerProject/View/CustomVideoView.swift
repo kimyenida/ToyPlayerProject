@@ -13,8 +13,8 @@ class CustomVideoView: UIView{
 //    private lazy var pagingTabBar = PagingTabBarView(categoryTitleList: categoryTitleList)
 //    private lazy var pagingView = PagingView(pagingTabBar: pagingTabBar)
     
-    var pagingTabBar : PagingTabBarView!
-    var pagingView : PagingView!
+    var pagingTabBar : PagingTabBarView?
+    var pagingView : PagingView?
     
     var programLabel: UILabel = {
         var label = UILabel()
@@ -28,9 +28,14 @@ class CustomVideoView: UIView{
         super.init(frame: .zero)
         self.backgroundColor = .white
         pagingTabBar = PagingTabBarView(categoryTitleList: categoryTitleList)
-        pagingView = PagingView(pagingTabBar: pagingTabBar)
-        setupLayout()
-        pagingView.delegate = self
+        if let pagingTabBar = pagingTabBar{
+            pagingView = PagingView(pagingTabBar: pagingTabBar)
+            if let pagingView = pagingView{
+                pagingView.delegate = self
+                setupLayout()
+            }
+        }
+
     }
     
     required init?(coder: NSCoder) {
@@ -39,6 +44,7 @@ class CustomVideoView: UIView{
 }
 private extension CustomVideoView{
     func setupLayout(){
+        guard let pagingTabBar = pagingTabBar, let pagingView = pagingView else { return }
         self.addSubview(pagingTabBar)
         self.addSubview(pagingView)
         self.addSubview(programLabel)
@@ -57,7 +63,7 @@ private extension CustomVideoView{
                                      pagingTabBar.trailingAnchor.constraint(equalTo: self.trailingAnchor),
                                      pagingTabBar.heightAnchor.constraint(equalToConstant: pagingTabBar.cellheight),
                                     
-                                     pagingView.topAnchor.constraint(equalTo: self.pagingTabBar.bottomAnchor),
+                                     pagingView.topAnchor.constraint(equalTo: pagingTabBar.bottomAnchor),
                                      pagingView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
                                      pagingView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
                                      pagingView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)])

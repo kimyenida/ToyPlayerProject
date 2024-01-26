@@ -37,7 +37,6 @@ class PagingTabBarView: UIView{
         return collectionView
     }()
     
-
     init(categoryTitleList: [String]) {
         self.categoryTitleList = categoryTitleList
         super.init(frame: .zero)
@@ -84,6 +83,8 @@ extension PagingTabBarView: UICollectionViewDataSource{
         cell.setupView(title: categoryTitleList[indexPath.item])
         return cell
     }
+    
+
 }
 
 private extension PagingTabBarView{
@@ -93,6 +94,8 @@ private extension PagingTabBarView{
         NSLayoutConstraint.activate([tabBarCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
                                      tabBarCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
                                      tabBarCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-                                     tabBarCollectionView.topAnchor.constraint(equalTo: self.topAnchor)])
+                                     tabBarCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
+                                    
+                                    ])
     }
 }

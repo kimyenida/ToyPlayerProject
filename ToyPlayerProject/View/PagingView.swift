@@ -13,12 +13,12 @@ protocol PagingViewProtocol{
 }
 
 class PagingView: UIView{
-    static var selectedIndex = 0 // 선택된 탭 위치, 기본은 onAir
-    static var selectedscode = "MBC" //
-    static var currentTab = 0 // 현재 탭
+    var selectedIndex = 0 // 선택된 탭 위치, 기본은 onAir
+    var selectedscode = "MBC" //
+    var currentTab = 0 // 현재 탭
     
     private let pagingTabBar : PagingTabBarView
-    private let viewModel = PagingViewModel()
+    private let viewModel : PagingViewModel?
     
     var initialContentOffset : CGFloat = 0.0
     var delegate : PagingViewProtocol?
@@ -39,12 +39,12 @@ class PagingView: UIView{
     
     init(pagingTabBar: PagingTabBarView) {
         self.pagingTabBar = pagingTabBar
-        
+        self.viewModel = PagingViewModel()
         super.init(frame: .zero)
         setupLayout()
         pagingTabBar.delegate = self
-        viewModel.delegate = self
-        viewModel.refreshData(isFirst: true, code: PagingView.currentTab)
+        viewModel?.delegate = self
+        viewModel?.refreshData(isFirst: true, code: currentTab)
     }
     
     required init?(coder: NSCoder) {
@@ -57,7 +57,9 @@ class PagingView: UIView{
 extension PagingView{
     func setupLayout(){
         addSubview(screenCollectionView)
+        
         screenCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([screenCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
                                      screenCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
                                      screenCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -92,7 +94,7 @@ extension PagingView: UICollectionViewDelegateFlowLayout{
         }
         let indexPath = IndexPath(row: Int(targetContentOffset.pointee.x / UIScreen.main.bounds.width), section: 0)
         pagingTabBar.tabBarCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
-        PagingView.currentTab = indexPath.item
+        currentTab = indexPath.item
 
         refreshCell()
     }
@@ -108,19 +110,21 @@ extension PagingView: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagingViewCell.identifier, for: indexPath) as? PagingViewCell else {return UICollectionViewCell()}
         cell.delegate = self
-        let data = (indexPath.item == 0) ? viewModel.tvList : viewModel.mbicList
-        cell.setupMyview(data: data)
+        let data = (indexPath.item == 0) ? viewModel?.tvList : viewModel?.mbicList
+        if let cellData = data{
+            cell.setupMyview(data: cellData)
+        }
         return cell
     }
 }
 
 extension PagingView: PagingTabBarProtocol{
     func didTapPagingTabBarCell(scrollTo indexPath: IndexPath) {
-        guard PagingView.currentTab != indexPath.item else {
+        guard currentTab != indexPath.item else {
             return
         }
         screenCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
-        PagingView.currentTab = indexPath.item
+        currentTab = indexPath.item
         refreshCell()
     }
 }
@@ -135,23 +139,32 @@ extension PagingView: PagingViewModelProtocol{
             }
         }
     }
+    
     func viewUpdate() {
         DispatchQueue.main.async {
             UIView.animate(withDuration: 1) {
                 self.screenCollectionView.reloadData()
-                self.delegate?.changeProgramLabel(data: self.viewModel.tvList[0])
+                if let labelData = self.viewModel?.tvList[0]{
+                    self.delegate?.changeProgramLabel(data: labelData)
+                }
             }
         }
     }
 }
 
 extension PagingView: PagingViewCellProtocol{
-    func refreshCell() {
-        self.viewModel.refreshData(isFirst: false, code: PagingView.currentTab)
+    func previousCellSelected(scode: String?, _ completion: ()->()) {
+        if selectedIndex == currentTab && selectedscode == scode{
+            completion()
+        }
     }
     
-    func cellSelected(indexPath: IndexPath) {
-        if let prevSelectedIndex = viewModel.indexListByScode[PagingView.currentTab][PagingView.selectedscode], prevSelectedIndex != indexPath.item{
+    func refreshCell() {
+        viewModel?.refreshData(isFirst: false, code: currentTab)
+    }
+    
+    func nowCellSelected(indexPath: IndexPath) {
+        if let prevSelectedIndex = viewModel?.indexListByScode[currentTab][selectedscode], prevSelectedIndex != indexPath.item{
             let selectedIndexPath = IndexPath(item: prevSelectedIndex, section: indexPath.section)
             for cell in self.screenCollectionView.visibleCells{
                 if let cell = cell as? PagingViewCell{
@@ -160,26 +173,29 @@ extension PagingView: PagingViewCellProtocol{
                 }
             }
         }
-        let tab = PagingView.currentTab == 0 ? viewModel.tvList : viewModel.mbicList
-        if let newScode = tab[indexPath.item].scheduleCode{
-            guard let chInfo = findChannelInfo(for: newScode) else { return }
-            if PagingView.selectedscode == newScode{
-                return
+        let tab = currentTab == 0 ? viewModel?.tvList : viewModel?.mbicList
+        if let channelList = tab{
+            if let newScode = channelList[indexPath.item].scheduleCode{
+                guard let chInfo = findChannelInfo(for: newScode) else { return }
+                if selectedscode == newScode{
+                    return
+                }
+                currentTab = (chInfo.type == "NVOD") ? 1 : 0
+                selectedIndex = currentTab
+                selectedscode = newScode
+                self.delegate?.changeProgramLabel(data: chInfo)
             }
-            PagingView.currentTab = (chInfo.type == "NVOD") ? 1 : 0
-            PagingView.selectedIndex = PagingView.currentTab
-            PagingView.selectedscode = newScode
-            self.delegate?.changeProgramLabel(data: chInfo)
         }
+
     }
     
     private func findChannelInfo(for sCode: String) -> ChannelInfo? {
         // tv
-        if let chInfoTV = viewModel.channelListByScode[0][sCode] {
+        if let chInfoTV = viewModel?.channelListByScode[0][sCode] {
             return chInfoTV
         }
         // ch24
-        else if let chInfoCH24 = viewModel.channelListByScode[1][sCode] {
+        else if let chInfoCH24 = viewModel?.channelListByScode[1][sCode] {
             return chInfoCH24
         }
         else {
