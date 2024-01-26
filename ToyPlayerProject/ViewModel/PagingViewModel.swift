@@ -8,12 +8,13 @@
 import Foundation
 
 protocol PagingViewModelProtocol{
-    func viewUpdate()
-    func viewRefresh(data:[ChannelInfo])
+    func viewRefresh(isFirst: Bool, data:[ChannelInfo])
 }
 class PagingViewModel{
     private var channelList : [ChannelInfo] = []
     private let networking = OnAirAPIProcess()
+    
+    
     
     var mbicList : [ChannelInfo] = []
     var tvList : [ChannelInfo] = []
@@ -24,19 +25,13 @@ class PagingViewModel{
     var delegate : PagingViewModelProtocol?
     
     func refreshData(isFirst: Bool, code: Int){
-        if isFirst == true{
-            self.requestOnAirChannelList {
-                self.delegate?.viewUpdate()
-            }
-            return
-        }
         if code == 0{
             self.requestOnAirChannelList{
-                self.delegate?.viewRefresh(data: self.tvList)
+                self.delegate?.viewRefresh(isFirst: isFirst, data: self.tvList)
             }
         } else{
             self.requestMbicChannelList {
-                self.delegate?.viewRefresh(data: self.mbicList)
+                self.delegate?.viewRefresh(isFirst: isFirst, data: self.mbicList)
             }
         }
     }
@@ -70,7 +65,7 @@ class PagingViewModel{
             switch response {
             case .success(let channels):
                 self.tvList = channels.tvList
-                
+
             case .failure(let error):
                 Util.log("OnAirVC ==> getMbicChannelList Error: \(error.reason)")
                 self.tvList = []

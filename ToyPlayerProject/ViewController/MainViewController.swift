@@ -68,12 +68,12 @@ class MainViewController: UIViewController{
         return button
     }()
 
-    var underView: CustomVideoView?
+    var underView: LiveInfoView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        self.underView = CustomVideoView()
+        self.underView = LiveInfoView()
         self.viewModel?.delegate = self
 
         self.addObservers()
@@ -149,7 +149,7 @@ class MainViewController: UIViewController{
     }
     
     deinit{
-        print("PlayerNewViewController - deinit")
+        print("MainViewController - deinit")
         viewModel = nil
         removeObservers()
     }

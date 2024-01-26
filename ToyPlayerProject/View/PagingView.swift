@@ -33,7 +33,7 @@ class PagingView: UIView{
         collectionView.bounces = false
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(PagingViewCell.self, forCellWithReuseIdentifier: PagingViewCell.identifier)
+        collectionView.register(VerticalPagingCell.self, forCellWithReuseIdentifier: VerticalPagingCell.identifier)
         return collectionView
     }()
     
@@ -108,7 +108,7 @@ extension PagingView: UICollectionViewDataSource{
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagingViewCell.identifier, for: indexPath) as? PagingViewCell else {return UICollectionViewCell()}
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VerticalPagingCell.identifier, for: indexPath) as? VerticalPagingCell else {return UICollectionViewCell()}
         cell.delegate = self
         let data = (indexPath.item == 0) ? viewModel?.tvList : viewModel?.mbicList
         if let cellData = data{
@@ -120,9 +120,7 @@ extension PagingView: UICollectionViewDataSource{
 
 extension PagingView: PagingTabBarProtocol{
     func didTapPagingTabBarCell(scrollTo indexPath: IndexPath) {
-        guard currentTab != indexPath.item else {
-            return
-        }
+        guard currentTab != indexPath.item else { return }
         screenCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
         currentTab = indexPath.item
         refreshCell()
@@ -130,29 +128,28 @@ extension PagingView: PagingTabBarProtocol{
 }
 
 extension PagingView: PagingViewModelProtocol{
-    func viewRefresh(data:[ChannelInfo]) {
+    func viewRefresh(isFirst: Bool, data: [ChannelInfo]) {
         DispatchQueue.main.async {
+            if isFirst == true{
+                guard self.viewModel?.tvList.isEmpty == false else {return}
+                guard let labelData = self.viewModel?.tvList[0] else {return}
+                self.delegate?.changeProgramLabel(data: labelData)
+            }
+            
             for cell in self.screenCollectionView.visibleCells{
-                if let cell = cell as? PagingViewCell{
+                if let cell = cell as? VerticalPagingCell{
                     cell.setupMyview(data: data) // data는 tvList 혹은 mbicList
+                    return
                 }
             }
+            self.screenCollectionView.reloadData()
+            
         }
     }
-    
-    func viewUpdate() {
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: 1) {
-                self.screenCollectionView.reloadData()
-                if let labelData = self.viewModel?.tvList[0]{
-                    self.delegate?.changeProgramLabel(data: labelData)
-                }
-            }
-        }
-    }
+
 }
 
-extension PagingView: PagingViewCellProtocol{
+extension PagingView: VerticalPagingCellProtocol{
     func previousCellSelected(scode: String?, _ completion: ()->()) {
         if selectedIndex == currentTab && selectedscode == scode{
             completion()
@@ -167,7 +164,7 @@ extension PagingView: PagingViewCellProtocol{
         if let prevSelectedIndex = viewModel?.indexListByScode[currentTab][selectedscode], prevSelectedIndex != indexPath.item{
             let selectedIndexPath = IndexPath(item: prevSelectedIndex, section: indexPath.section)
             for cell in self.screenCollectionView.visibleCells{
-                if let cell = cell as? PagingViewCell{
+                if let cell = cell as? VerticalPagingCell{
                     cell.videoCollectionView.cellForItem(at: selectedIndexPath)?.isSelected = false
                     cell.videoCollectionView.deselectItem(at: selectedIndexPath, animated: false)
                 }

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol PagingViewCellProtocol{
+protocol VerticalPagingCellProtocol{
     func nowCellSelected(indexPath: IndexPath)
     func previousCellSelected(scode:String?, _ completion: () -> ())
     func refreshCell()
@@ -23,7 +23,7 @@ enum Dimension {
 
 class VerticalPagingCell: UICollectionViewCell{
     
-    var delegate: PagingViewCellProtocol?
+    var delegate: VerticalPagingCellProtocol?
     
     var refreshControl : UIRefreshControl = {
        var refresh = UIRefreshControl()
@@ -61,7 +61,7 @@ class VerticalPagingCell: UICollectionViewCell{
         super.init(frame: frame)
         setupLayout()
         
-        videoCollectionView.register(VideoCell.self, forCellWithReuseIdentifier: VideoCell.reuseId)
+        videoCollectionView.register(OneVideoCell.self, forCellWithReuseIdentifier: OneVideoCell.reuseId)
         videoCollectionView.delegate = self
         videoCollectionView.dataSource = self
         if #available(iOS 10.0, *){
@@ -112,7 +112,7 @@ extension VerticalPagingCell: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VideoCell.reuseId, for: indexPath) as! VideoCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OneVideoCell.reuseId, for: indexPath) as! OneVideoCell
         let items = channelData[indexPath.item]
         if let title = items.title, let typetitle = items.typeTitle, let image = items.onAirImage{
             cell.configure(title: typetitle, sub: title, imagelink: image )

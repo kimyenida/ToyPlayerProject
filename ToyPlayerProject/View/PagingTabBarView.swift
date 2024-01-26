@@ -33,7 +33,7 @@ class PagingTabBarView: UIView{
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        collectionView.register(PagingTabBarCell.self, forCellWithReuseIdentifier: PagingTabBarCell.identifier)
+        collectionView.register(TabBarCell.self, forCellWithReuseIdentifier: TabBarCell.identifier)
         return collectionView
     }()
     
@@ -79,7 +79,7 @@ extension PagingTabBarView: UICollectionViewDataSource{
 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagingTabBarCell.identifier, for: indexPath) as? PagingTabBarCell else { return UICollectionViewCell()}
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TabBarCell.identifier, for: indexPath) as? TabBarCell else { return UICollectionViewCell()}
         cell.setupView(title: categoryTitleList[indexPath.item])
         return cell
     }
