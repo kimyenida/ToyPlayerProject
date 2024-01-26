@@ -21,7 +21,7 @@ enum Dimension {
     static let contentSpacing: CGFloat = 14
 }
 
-class PagingViewCell: UICollectionViewCell{
+class VerticalPagingCell: UICollectionViewCell{
     
     var delegate: PagingViewCellProtocol?
     
@@ -93,7 +93,7 @@ class PagingViewCell: UICollectionViewCell{
     
 
 }
-extension PagingViewCell{
+extension VerticalPagingCell{
     private func setupLayout(){
         contentView.addSubview(videoCollectionView)
         videoCollectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -105,7 +105,7 @@ extension PagingViewCell{
     }
 }
 
-extension PagingViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+extension VerticalPagingCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return channelData.count

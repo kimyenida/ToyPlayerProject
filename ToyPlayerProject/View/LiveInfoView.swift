@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class CustomVideoView: UIView{
+class LiveInfoView: UIView{
     private let categoryTitleList = [ "온에어", "엠빅"]
 //    private lazy var pagingTabBar = PagingTabBarView(categoryTitleList: categoryTitleList)
 //    private lazy var pagingView = PagingView(pagingTabBar: pagingTabBar)
@@ -42,7 +42,7 @@ class CustomVideoView: UIView{
         fatalError("init(coder:) has not been implemented")
     }
 }
-private extension CustomVideoView{
+private extension LiveInfoView{
     func setupLayout(){
         guard let pagingTabBar = pagingTabBar, let pagingView = pagingView else { return }
         self.addSubview(pagingTabBar)
@@ -70,7 +70,7 @@ private extension CustomVideoView{
     }
 }
 
-extension CustomVideoView: PagingViewProtocol{
+extension LiveInfoView: PagingViewProtocol{
     func changeProgramLabel(data:ChannelInfo) {
         guard let typetitle = data.typeTitle, let title = data.title else {
             return

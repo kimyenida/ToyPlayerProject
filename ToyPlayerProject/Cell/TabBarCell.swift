@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class PagingTabBarCell: UICollectionViewCell{
+class TabBarCell: UICollectionViewCell{
     static let identifier = "PagingTabBarCell"
     
     var titleLabel : UILabel = {
@@ -46,7 +46,7 @@ class PagingTabBarCell: UICollectionViewCell{
     }
 }
 
-private extension PagingTabBarCell{
+private extension TabBarCell{
     func setupLayout(){
         contentView.addSubview(titleLabel)
         contentView.addSubview(underline)
