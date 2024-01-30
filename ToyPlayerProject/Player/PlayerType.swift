@@ -1,5 +1,5 @@
 //
-//  MainViewModel.swift
+//  PlayerType.swift
 //  ToyPlayerProject
 //
 //  Created by Admin iMBC on 1/30/24.
