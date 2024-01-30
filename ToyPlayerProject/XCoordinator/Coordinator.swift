@@ -19,7 +19,6 @@ extension Coordinator where Self: AnyObject {
         let transition = prepareTransition(for: route)
         performTransition(transition) { completion?() }
     }
-    
     func childTransitionCompleted() {
         removeChildrenIfNeeded()
     }

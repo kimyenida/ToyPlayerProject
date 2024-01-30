@@ -9,6 +9,7 @@ import Foundation
 
 protocol PagingViewModelProtocol {
     func viewRefresh(isFirst: Bool, data:[ChannelInfo])
+    func setChannelList(channels: OnAirChannelList)
 }
 class PagingViewModel {
     private var channelList : [ChannelInfo] = []
@@ -65,7 +66,8 @@ class PagingViewModel {
             switch response {
             case .success(let channels):
                 self.tvList = channels.tvList
-
+                
+                delegate?.setChannelList(channels: channels)
             case .failure(let error):
                 Util.log("OnAirVC ==> getMbicChannelList Error: \(error.reason)")
                 self.tvList = []

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9D218ACB2B5DF3FC0010D04A /* OneVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D218ACA2B5DF3FC0010D04A /* OneVideoCell.swift */; };
 		9D25A8BA2B576DBB000E4FCF /* TestVideoLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D25A8B92B576DBB000E4FCF /* TestVideoLinks.swift */; };
+		9D3E36172B68C723009DDDD8 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3E36162B68C723009DDDD8 /* MainViewModel.swift */; };
 		9D68F4052B5FA0F6001DA94F /* VerticalPagingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D68F4042B5FA0F6001DA94F /* VerticalPagingCell.swift */; };
 		9D88B8C32B5E42BB007390A1 /* PagingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D88B8C22B5E42BB007390A1 /* PagingViewModel.swift */; };
 		9D8A344A2B58BCEE005AD111 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8A34492B58BCEE005AD111 /* MainViewController.swift */; };
@@ -39,6 +40,19 @@
 		9DD313FE2B5512BF0038ACAB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD313FD2B5512BF0038ACAB /* SceneDelegate.swift */; };
 		9DD314052B5512C10038ACAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DD314042B5512C10038ACAB /* Assets.xcassets */; };
 		9DD314082B5512C10038ACAB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DD314062B5512C10038ACAB /* LaunchScreen.storyboard */; };
+		9DDB16CD2B68B5EA002E230E /* iMBCPlayerSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDB16CC2B68B5EA002E230E /* iMBCPlayerSource.swift */; };
+		9DDB16CF2B68B6BF002E230E /* PlayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDB16CE2B68B6BF002E230E /* PlayerType.swift */; };
+		9DDB16D12B68B6FA002E230E /* OnAirDataForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDB16D02B68B6FA002E230E /* OnAirDataForm.swift */; };
+		9DDB16D32B68B713002E230E /* BasicContentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDB16D22B68B713002E230E /* BasicContentInfo.swift */; };
+		9DDB16D52B68B72F002E230E /* NVODDataForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDB16D42B68B72F002E230E /* NVODDataForm.swift */; };
+		9DDB16D72B68B751002E230E /* PlayerUtilForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDB16D62B68B751002E230E /* PlayerUtilForm.swift */; };
+		9DDB16D92B68B773002E230E /* PlayerURLUtilForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDB16D82B68B773002E230E /* PlayerURLUtilForm.swift */; };
+		9DDB16DB2B68B789002E230E /* MbicURLUtilForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDB16DA2B68B789002E230E /* MbicURLUtilForm.swift */; };
+		9DDB16DD2B68B7AA002E230E /* iMBCPlayerForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDB16DC2B68B7AA002E230E /* iMBCPlayerForm.swift */; };
+		9DDB16DF2B68B7C0002E230E /* MbicPlayerForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDB16DE2B68B7C0002E230E /* MbicPlayerForm.swift */; };
+		9DDB16E12B68B823002E230E /* NewNVODDataForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDB16E02B68B823002E230E /* NewNVODDataForm.swift */; };
+		9DDB16E32B68B83A002E230E /* OnAirStatusForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDB16E22B68B83A002E230E /* OnAirStatusForm.swift */; };
+		9DDB16E52B68B86A002E230E /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDB16E42B68B86A002E230E /* Data+Extension.swift */; };
 		9DDCD0022B678E3E00710FE0 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDCD0012B678E3E00710FE0 /* AppCoordinator.swift */; };
 		9DDCD0052B678E7100710FE0 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDCD0042B678E7100710FE0 /* BaseCoordinator.swift */; };
 		9DDCD0072B678E7C00710FE0 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDCD0062B678E7C00710FE0 /* Route.swift */; };
@@ -51,7 +65,6 @@
 		9DDCD0152B678F0B00710FE0 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDCD0142B678F0B00710FE0 /* UIViewController+Extension.swift */; };
 		9DDCD0172B678F5200710FE0 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDCD0162B678F5200710FE0 /* Router.swift */; };
 		9DDCD0192B67906800710FE0 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDCD0182B67906800710FE0 /* Container.swift */; };
-		9DDCD0292B67944100710FE0 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDCD0282B67944100710FE0 /* MainViewModel.swift */; };
 		9DF73C492B5F52C200AC2217 /* ChannelInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF73C482B5F52C200AC2217 /* ChannelInfo.swift */; };
 		9DFB843A2B564ECC00A7C688 /* PlayerNewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFB84392B564ECC00A7C688 /* PlayerNewViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -59,6 +72,7 @@
 /* Begin PBXFileReference section */
 		9D218ACA2B5DF3FC0010D04A /* OneVideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneVideoCell.swift; sourceTree = "<group>"; };
 		9D25A8B92B576DBB000E4FCF /* TestVideoLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestVideoLinks.swift; sourceTree = "<group>"; };
+		9D3E36162B68C723009DDDD8 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		9D68F4042B5FA0F6001DA94F /* VerticalPagingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalPagingCell.swift; sourceTree = "<group>"; };
 		9D88B8C22B5E42BB007390A1 /* PagingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingViewModel.swift; sourceTree = "<group>"; };
 		9D8A34492B58BCEE005AD111 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -91,6 +105,19 @@
 		9DD314042B5512C10038ACAB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9DD314072B5512C10038ACAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9DD314092B5512C10038ACAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9DDB16CC2B68B5EA002E230E /* iMBCPlayerSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iMBCPlayerSource.swift; sourceTree = "<group>"; };
+		9DDB16CE2B68B6BF002E230E /* PlayerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerType.swift; sourceTree = "<group>"; };
+		9DDB16D02B68B6FA002E230E /* OnAirDataForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnAirDataForm.swift; sourceTree = "<group>"; };
+		9DDB16D22B68B713002E230E /* BasicContentInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicContentInfo.swift; sourceTree = "<group>"; };
+		9DDB16D42B68B72F002E230E /* NVODDataForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVODDataForm.swift; sourceTree = "<group>"; };
+		9DDB16D62B68B751002E230E /* PlayerUtilForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerUtilForm.swift; sourceTree = "<group>"; };
+		9DDB16D82B68B773002E230E /* PlayerURLUtilForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerURLUtilForm.swift; sourceTree = "<group>"; };
+		9DDB16DA2B68B789002E230E /* MbicURLUtilForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MbicURLUtilForm.swift; sourceTree = "<group>"; };
+		9DDB16DC2B68B7AA002E230E /* iMBCPlayerForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iMBCPlayerForm.swift; sourceTree = "<group>"; };
+		9DDB16DE2B68B7C0002E230E /* MbicPlayerForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MbicPlayerForm.swift; sourceTree = "<group>"; };
+		9DDB16E02B68B823002E230E /* NewNVODDataForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNVODDataForm.swift; sourceTree = "<group>"; };
+		9DDB16E22B68B83A002E230E /* OnAirStatusForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnAirStatusForm.swift; sourceTree = "<group>"; };
+		9DDB16E42B68B86A002E230E /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
 		9DDCD0012B678E3E00710FE0 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		9DDCD0042B678E7100710FE0 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		9DDCD0062B678E7C00710FE0 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
@@ -103,7 +130,6 @@
 		9DDCD0142B678F0B00710FE0 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		9DDCD0162B678F5200710FE0 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		9DDCD0182B67906800710FE0 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
-		9DDCD0282B67944100710FE0 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		9DF73C482B5F52C200AC2217 /* ChannelInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelInfo.swift; sourceTree = "<group>"; };
 		9DFB84392B564ECC00A7C688 /* PlayerNewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerNewViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -130,6 +156,23 @@
 			path = Comm;
 			sourceTree = "<group>";
 		};
+		9D3E36182B68DF26009DDDD8 /* Form */ = {
+			isa = PBXGroup;
+			children = (
+				9DDB16D42B68B72F002E230E /* NVODDataForm.swift */,
+				9DDB16D62B68B751002E230E /* PlayerUtilForm.swift */,
+				9DDB16D82B68B773002E230E /* PlayerURLUtilForm.swift */,
+				9DDB16DA2B68B789002E230E /* MbicURLUtilForm.swift */,
+				9DDB16DC2B68B7AA002E230E /* iMBCPlayerForm.swift */,
+				9DDB16DE2B68B7C0002E230E /* MbicPlayerForm.swift */,
+				9DDB16E02B68B823002E230E /* NewNVODDataForm.swift */,
+				9DDB16E22B68B83A002E230E /* OnAirStatusForm.swift */,
+				9DDB16D02B68B6FA002E230E /* OnAirDataForm.swift */,
+			);
+			name = Form;
+			path = "래그";
+			sourceTree = "<group>";
+		};
 		9D8A34372B58A329005AD111 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,7 +197,6 @@
 		9DBE066A2B5A360F00B53C33 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				9DBE066B2B5A361C00B53C33 /* PlayViewerType.swift */,
 				9DBE06732B5A36B200B53C33 /* MbicUtilForm.swift */,
 				9DBE06752B5A370400B53C33 /* AdInfoForm.swift */,
 				9DBE067B2B5A3A5B00B53C33 /* OnAirChannelList.swift */,
@@ -231,6 +273,7 @@
 			children = (
 				9DC33A7D2B5FB25C00EBDCCB /* String+Extension.swift */,
 				9DDCD0142B678F0B00710FE0 /* UIViewController+Extension.swift */,
+				9DDB16E42B68B86A002E230E /* Data+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -259,6 +302,7 @@
 				9DD314042B5512C10038ACAB /* Assets.xcassets */,
 				9DD314062B5512C10038ACAB /* LaunchScreen.storyboard */,
 				9DD314092B5512C10038ACAB /* Info.plist */,
+				9DDB16C92B689199002E230E /* Player */,
 				9DDCD0032B678E6100710FE0 /* XCoordinator */,
 				9DDCD0002B678E1A00710FE0 /* Coordinator */,
 				9DC33A7C2B5FB24D00EBDCCB /* Extension */,
@@ -273,6 +317,18 @@
 				9DFB84372B564EB200A7C688 /* ViewModel */,
 			);
 			path = ToyPlayerProject;
+			sourceTree = "<group>";
+		};
+		9DDB16C92B689199002E230E /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				9D3E36182B68DF26009DDDD8 /* Form */,
+				9DBE066B2B5A361C00B53C33 /* PlayViewerType.swift */,
+				9DDB16CC2B68B5EA002E230E /* iMBCPlayerSource.swift */,
+				9DDB16CE2B68B6BF002E230E /* PlayerType.swift */,
+				9DDB16D22B68B713002E230E /* BasicContentInfo.swift */,
+			);
+			path = Player;
 			sourceTree = "<group>";
 		};
 		9DDCD0002B678E1A00710FE0 /* Coordinator */ = {
@@ -305,7 +361,7 @@
 			children = (
 				9DFB84392B564ECC00A7C688 /* PlayerNewViewModel.swift */,
 				9D88B8C22B5E42BB007390A1 /* PagingViewModel.swift */,
-				9DDCD0282B67944100710FE0 /* MainViewModel.swift */,
+				9D3E36162B68C723009DDDD8 /* MainViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -388,6 +444,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DDB16CD2B68B5EA002E230E /* iMBCPlayerSource.swift in Sources */,
+				9DDB16D52B68B72F002E230E /* NVODDataForm.swift in Sources */,
 				9DDCD0022B678E3E00710FE0 /* AppCoordinator.swift in Sources */,
 				9D8A344A2B58BCEE005AD111 /* MainViewController.swift in Sources */,
 				9DBE06762B5A370400B53C33 /* AdInfoForm.swift in Sources */,
@@ -397,13 +455,17 @@
 				9D218ACB2B5DF3FC0010D04A /* OneVideoCell.swift in Sources */,
 				9DBE067F2B5A3B1A00B53C33 /* StreamAPIProcess.swift in Sources */,
 				9DDCD0092B678E8900710FE0 /* Coordinator.swift in Sources */,
+				9DDB16D32B68B713002E230E /* BasicContentInfo.swift in Sources */,
+				9DDB16D92B68B773002E230E /* PlayerURLUtilForm.swift in Sources */,
 				9DDCD0192B67906800710FE0 /* Container.swift in Sources */,
 				9D25A8BA2B576DBB000E4FCF /* TestVideoLinks.swift in Sources */,
 				9DD313FC2B5512BF0038ACAB /* AppDelegate.swift in Sources */,
 				9DFB843A2B564ECC00A7C688 /* PlayerNewViewModel.swift in Sources */,
+				9DDB16E32B68B83A002E230E /* OnAirStatusForm.swift in Sources */,
 				9DBE06862B5A3BCA00B53C33 /* NetworkRouter.swift in Sources */,
 				9DBE06932B5A414700B53C33 /* OnAirAPIProcess.swift in Sources */,
 				9D88B8C32B5E42BB007390A1 /* PagingViewModel.swift in Sources */,
+				9DDB16DB2B68B789002E230E /* MbicURLUtilForm.swift in Sources */,
 				9DBE06812B5A3B2C00B53C33 /* APIProcess.swift in Sources */,
 				9DC33A7E2B5FB25C00EBDCCB /* String+Extension.swift in Sources */,
 				9DBE06902B5A3C6500B53C33 /* NetworkDomain.swift in Sources */,
@@ -411,10 +473,15 @@
 				9DDCD0072B678E7C00710FE0 /* Route.swift in Sources */,
 				9DD313FE2B5512BF0038ACAB /* SceneDelegate.swift in Sources */,
 				9DBE06882B5A3BE700B53C33 /* EndPointType.swift in Sources */,
+				9DDB16D72B68B751002E230E /* PlayerUtilForm.swift in Sources */,
 				9DBE066C2B5A361C00B53C33 /* PlayViewerType.swift in Sources */,
 				9DBE06952B5A417700B53C33 /* ControlAPI.swift in Sources */,
+				9DDB16CF2B68B6BF002E230E /* PlayerType.swift in Sources */,
+				9DDB16D12B68B6FA002E230E /* OnAirDataForm.swift in Sources */,
+				9DDB16DD2B68B7AA002E230E /* iMBCPlayerForm.swift in Sources */,
 				9DDCD00F2B678EA800710FE0 /* Presentable.swift in Sources */,
 				9D8A34562B58F7AF005AD111 /* PagingView.swift in Sources */,
+				9D3E36172B68C723009DDDD8 /* MainViewModel.swift in Sources */,
 				9DBE06722B5A367400B53C33 /* Util.swift in Sources */,
 				9DDCD00D2B678E9A00710FE0 /* StrongRouter.swift in Sources */,
 				9DDCD0052B678E7100710FE0 /* BaseCoordinator.swift in Sources */,
@@ -422,11 +489,13 @@
 				9DDCD0172B678F5200710FE0 /* Router.swift in Sources */,
 				9DDCD00B2B678E9300710FE0 /* WeakErased.swift in Sources */,
 				9DDCD0112B678EB400710FE0 /* Transition.swift in Sources */,
+				9DDB16DF2B68B7C0002E230E /* MbicPlayerForm.swift in Sources */,
 				9DBE066F2B5A365100B53C33 /* IHandlerCommend.swift in Sources */,
-				9DDCD0292B67944100710FE0 /* MainViewModel.swift in Sources */,
 				9D8A345E2B590806005AD111 /* LiveInfoView.swift in Sources */,
 				9D9B25AB2B60C97C00F09254 /* ImageURL.swift in Sources */,
+				9DDB16E12B68B823002E230E /* NewNVODDataForm.swift in Sources */,
 				9D9B25A72B608C1800F09254 /* CustomImageView.swift in Sources */,
+				9DDB16E52B68B86A002E230E /* Data+Extension.swift in Sources */,
 				9DF73C492B5F52C200AC2217 /* ChannelInfo.swift in Sources */,
 				9D8A34582B58FAAF005AD111 /* TabBarCell.swift in Sources */,
 				9DBE068E2B5A3C4200B53C33 /* StreamAPI.swift in Sources */,

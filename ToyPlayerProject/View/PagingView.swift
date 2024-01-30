@@ -10,6 +10,7 @@ import UIKit
 
 protocol PagingViewProtocol {
     func changeProgramLabel(data: ChannelInfo)
+    func setChannelList(channels: OnAirChannelList)
 }
 
 class PagingView: UIView {
@@ -133,6 +134,10 @@ extension PagingView: PagingTabBarProtocol {
 }
 
 extension PagingView: PagingViewModelProtocol {
+    func setChannelList(channels: OnAirChannelList) {
+        delegate?.setChannelList(channels: channels)
+    }
+    
     func viewRefresh(isFirst: Bool, data: [ChannelInfo]) {
         DispatchQueue.main.async {
             if isFirst == true{

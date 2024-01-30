@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class OneVideoCell: UICollectionViewCell {
-    static let reuseId = "VideoCell"
+    static let reuseId = "OneVideoCell"
 
     
     var thumbnailImageView : CustomImageView = {

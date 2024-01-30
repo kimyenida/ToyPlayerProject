@@ -76,6 +76,7 @@ class MainViewController: UIViewController {
         self.view.backgroundColor = .white
         self.playerVM = PlayerNewViewModel()
         self.underView = LiveInfoView()
+        underView?.delegate = self
         self.playerVM?.delegate = self
 
         self.addObservers()
@@ -277,3 +278,15 @@ extension MainViewController: PlayerViewModelProtocol {
     
 }
 
+
+extension MainViewController: LivaInfoViewProtocol {
+    func setChannelList(channels: OnAirChannelList) {
+        self.mainVM?.setChannelList(channels: channels)
+    }
+    
+    func givedata(data: ChannelInfo) {
+        self.mainVM?.trigger(chInfo: data)
+    }
+    
+    
+}

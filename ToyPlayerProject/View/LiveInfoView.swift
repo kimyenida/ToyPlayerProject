@@ -8,13 +8,18 @@
 import Foundation
 import UIKit
 
+protocol LivaInfoViewProtocol{
+    func givedata(data: ChannelInfo)
+    func setChannelList(channels: OnAirChannelList)
+}
 class LiveInfoView: UIView {
     private let categoryTitleList = [ "온에어", "엠빅"]
-//    private lazy var pagingTabBar = PagingTabBarView(categoryTitleList: categoryTitleList)
-//    private lazy var pagingView = PagingView(pagingTabBar: pagingTabBar)
     
-    var pagingTabBar : PagingTabBarView?
-    var pagingView : PagingView?
+    var delegate: LivaInfoViewProtocol?
+    
+    var pagingTabBar: PagingTabBarView?
+    var pagingView: PagingView?
+    
     
     var programLabel: UILabel = {
         var label = UILabel()
@@ -71,11 +76,16 @@ private extension LiveInfoView {
 }
 
 extension LiveInfoView: PagingViewProtocol {
+    func setChannelList(channels: OnAirChannelList) {
+        delegate?.setChannelList(channels: channels)
+    }
+    
     func changeProgramLabel(data:ChannelInfo) {
         guard let typetitle = data.typeTitle, let title = data.title else {
             return
         }
         programLabel.text = "\(typetitle) - \(title)"
+        delegate?.givedata(data: data)
 
     }
     

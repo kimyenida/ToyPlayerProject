@@ -37,7 +37,7 @@ class VerticalPagingCell: UICollectionViewCell {
             }
         }
     }
-    static let identifier = "PagingViewCell"
+    static let identifier = "VerticalPagingCell"
     
     var videoCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -60,7 +60,6 @@ class VerticalPagingCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
-        
         videoCollectionView.register(OneVideoCell.self, forCellWithReuseIdentifier: OneVideoCell.reuseId)
         videoCollectionView.delegate = self
         videoCollectionView.dataSource = self
@@ -118,14 +117,12 @@ extension VerticalPagingCell: UICollectionViewDelegate, UICollectionViewDataSour
             cell.configure(title: typetitle, sub: title, imagelink: image )
         }
         
-        
         delegate?.previousCellSelected(scode: items.scheduleCode){
             cell.setSelected(true)
             videoCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
         }
         
 
-        
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
