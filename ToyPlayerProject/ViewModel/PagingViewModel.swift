@@ -7,10 +7,10 @@
 
 import Foundation
 
-protocol PagingViewModelProtocol{
+protocol PagingViewModelProtocol {
     func viewRefresh(isFirst: Bool, data:[ChannelInfo])
 }
-class PagingViewModel{
+class PagingViewModel {
     private var channelList : [ChannelInfo] = []
     private let networking = OnAirAPIProcess()
     
@@ -25,8 +25,8 @@ class PagingViewModel{
     var delegate : PagingViewModelProtocol?
     
     func refreshData(isFirst: Bool, code: Int){
-        if code == 0{
-            self.requestOnAirChannelList{
+        if code == 0 {
+            self.requestOnAirChannelList {
                 self.delegate?.viewRefresh(isFirst: isFirst, data: self.tvList)
             }
         } else{

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class LiveInfoView: UIView{
+class LiveInfoView: UIView {
     private let categoryTitleList = [ "온에어", "엠빅"]
 //    private lazy var pagingTabBar = PagingTabBarView(categoryTitleList: categoryTitleList)
 //    private lazy var pagingView = PagingView(pagingTabBar: pagingTabBar)
@@ -42,7 +42,7 @@ class LiveInfoView: UIView{
         fatalError("init(coder:) has not been implemented")
     }
 }
-private extension LiveInfoView{
+private extension LiveInfoView {
     func setupLayout(){
         guard let pagingTabBar = pagingTabBar, let pagingView = pagingView else { return }
         self.addSubview(pagingTabBar)
@@ -70,7 +70,7 @@ private extension LiveInfoView{
     }
 }
 
-extension LiveInfoView: PagingViewProtocol{
+extension LiveInfoView: PagingViewProtocol {
     func changeProgramLabel(data:ChannelInfo) {
         guard let typetitle = data.typeTitle, let title = data.title else {
             return

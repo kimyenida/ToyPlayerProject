@@ -10,18 +10,19 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    var coordinator: AppCoordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(windowScene: windowScene)
-        let mainViewController = MainViewController()
-        let mainViewModel = PlayerNewViewModel()
-        mainViewController.viewModel = mainViewModel
-        
-//        let mainViewController = OnAirVC()
-        window?.rootViewController = mainViewController
-        window?.makeKeyAndVisible()
+        if let windowScene = scene as? UIWindowScene{
+            let coordinator = AppCoordinator(windowScene: windowScene)
+            self.coordinator = coordinator
+            self.window = coordinator.window
+        }
+//        guard let windowScene = (scene as? UIWindowScene) else { return }
+//        window = UIWindow(windowScene: windowScene)
+//        let mainViewController = MainViewController()
+//        window?.rootViewController = mainViewController
+//        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

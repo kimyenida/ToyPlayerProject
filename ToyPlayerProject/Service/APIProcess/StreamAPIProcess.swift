@@ -7,7 +7,7 @@
 
 import Foundation
 
-class StreamAPIProcess:APIProcess{
+class StreamAPIProcess:APIProcess {
     let networking = iMBCNetRouter<StreamApi>()
     
     //mbic

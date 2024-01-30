@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Util: NSObject{
+class Util: NSObject {
     static func log(_ messages: Any..., functionName: String=#function, saveToFile: Bool=false) {
         #if DEBUG
         print("💚 iMBC - \(functionName)# ", messages)

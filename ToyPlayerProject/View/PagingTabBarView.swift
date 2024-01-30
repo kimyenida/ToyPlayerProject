@@ -9,12 +9,12 @@ import Foundation
 import UIKit
 
 
-protocol PagingTabBarProtocol: AnyObject{
+protocol PagingTabBarProtocol: AnyObject {
     func didTapPagingTabBarCell(scrollTo indexPath: IndexPath)
 }
 
 
-class PagingTabBarView: UIView{
+class PagingTabBarView: UIView {
     var cellheight: CGFloat {44.0}
     var categoryTitleList: [String]
     
@@ -71,7 +71,7 @@ extension PagingTabBarView: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension PagingTabBarView: UICollectionViewDataSource{
+extension PagingTabBarView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return categoryTitleList.count
     }
@@ -87,7 +87,7 @@ extension PagingTabBarView: UICollectionViewDataSource{
 
 }
 
-private extension PagingTabBarView{
+private extension PagingTabBarView {
     func setupLayout(){
         addSubview(tabBarCollectionView)
         tabBarCollectionView.translatesAutoresizingMaskIntoConstraints = false

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 
-class CustomImageView: UIImageView{
+class CustomImageView: UIImageView {
 
 
     var task: URLSessionDataTask!
@@ -25,7 +25,7 @@ class CustomImageView: UIImageView{
         self.image = UIImage(named: "default_thum_vod_movie_list")
     }
     
-    func loadImage(imageUrl: String){
+    func loadImage(imageUrl: String) {
         image = nil
         let urlstr = (imageUrl == "") ? ImageURL.BACK_IMAGE_BLUREFFECT : imageUrl
         let ssl = URL(string: urlstr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!.applySSL())!

@@ -8,19 +8,19 @@
 import Foundation
 import UIKit
 
-protocol PagingViewProtocol{
+protocol PagingViewProtocol {
     func changeProgramLabel(data: ChannelInfo)
 }
 
-class PagingView: UIView{
+class PagingView: UIView {
     var selectedIndex = 0 // 선택된 탭 위치, 기본은 onAir
     var selectedscode = "MBC" //
     var currentTab = 0 // 현재 탭
     
     private let pagingTabBar : PagingTabBarView
     private let viewModel : PagingViewModel?
+    private var initialContentOffset : CGFloat = 0.0
     
-    var initialContentOffset : CGFloat = 0.0
     var delegate : PagingViewProtocol?
     
     private lazy var screenCollectionView : UICollectionView = {
@@ -40,10 +40,14 @@ class PagingView: UIView{
     init(pagingTabBar: PagingTabBarView) {
         self.pagingTabBar = pagingTabBar
         self.viewModel = PagingViewModel()
+        
         super.init(frame: .zero)
+        
         setupLayout()
+        
         pagingTabBar.delegate = self
         viewModel?.delegate = self
+        
         viewModel?.refreshData(isFirst: true, code: currentTab)
     }
     
@@ -54,7 +58,7 @@ class PagingView: UIView{
 }
 
 
-extension PagingView{
+extension PagingView {
     func setupLayout(){
         addSubview(screenCollectionView)
         
@@ -67,7 +71,7 @@ extension PagingView{
     }
 }
 
-extension PagingView: UICollectionViewDelegateFlowLayout{
+extension PagingView: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionViewFrame = collectionView.frame
@@ -99,10 +103,11 @@ extension PagingView: UICollectionViewDelegateFlowLayout{
         refreshCell()
     }
 
+
 }
 
 
-extension PagingView: UICollectionViewDataSource{
+extension PagingView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return pagingTabBar.categoryTitleList.count
     }
@@ -111,14 +116,14 @@ extension PagingView: UICollectionViewDataSource{
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VerticalPagingCell.identifier, for: indexPath) as? VerticalPagingCell else {return UICollectionViewCell()}
         cell.delegate = self
         let data = (indexPath.item == 0) ? viewModel?.tvList : viewModel?.mbicList
-        if let cellData = data{
+        if let cellData = data {
             cell.setupMyview(data: cellData)
         }
         return cell
     }
 }
 
-extension PagingView: PagingTabBarProtocol{
+extension PagingView: PagingTabBarProtocol {
     func didTapPagingTabBarCell(scrollTo indexPath: IndexPath) {
         guard currentTab != indexPath.item else { return }
         screenCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
@@ -127,7 +132,7 @@ extension PagingView: PagingTabBarProtocol{
     }
 }
 
-extension PagingView: PagingViewModelProtocol{
+extension PagingView: PagingViewModelProtocol {
     func viewRefresh(isFirst: Bool, data: [ChannelInfo]) {
         DispatchQueue.main.async {
             if isFirst == true{
@@ -149,7 +154,7 @@ extension PagingView: PagingViewModelProtocol{
 
 }
 
-extension PagingView: VerticalPagingCellProtocol{
+extension PagingView: VerticalPagingCellProtocol {
     func previousCellSelected(scode: String?, _ completion: ()->()) {
         if selectedIndex == currentTab && selectedscode == scode{
             completion()

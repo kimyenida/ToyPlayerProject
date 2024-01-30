@@ -10,14 +10,15 @@ import AVFoundation
 import UIKit
 import AVKit
 
-class MainViewController: UIViewController{
+class MainViewController: UIViewController {
     private var player: AVPlayer?
     private var playerLayer: AVPlayerLayer?
     private let links = [TestVideoLinks.link1,TestVideoLinks.link2,TestVideoLinks.link3]
     
     var heightConstraint: NSLayoutConstraint?
 
-    var viewModel: PlayerNewViewModel?
+    var playerVM: PlayerNewViewModel?
+    var mainVM: MainViewModel?
 
     private var videoBackgroundView: UIView = {
         let view = UIView()
@@ -73,8 +74,9 @@ class MainViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        self.playerVM = PlayerNewViewModel()
         self.underView = LiveInfoView()
-        self.viewModel?.delegate = self
+        self.playerVM?.delegate = self
 
         self.addObservers()
         self.setVideoPlayer()
@@ -107,7 +109,7 @@ class MainViewController: UIViewController{
             self.playerLayer?.frame = self.videoBackgroundView.bounds
         })
     }
-    func addObservers(){
+    func addObservers() {
         NotificationCenter.default.addObserver(self,
             selector: #selector(playerDidFinishPlaying),
             name: .AVPlayerItemDidPlayToEndTime,
@@ -121,23 +123,23 @@ class MainViewController: UIViewController{
     
 
     @objc
-    private func onTapSlider(){
-        viewModel?.onTabPlayerSlider(player: self.player, sliderValue: Float64(slider.value))
+    private func onTapSlider() {
+        playerVM?.onTabPlayerSlider(player: self.player, sliderValue: Float64(slider.value))
     }
     
     @objc
-    private func onTapBack10(){
-        viewModel?.onTabBack10(player: self.player)
+    private func onTapBack10() {
+        playerVM?.onTabBack10(player: self.player)
     }
     
     @objc
-    private func onTapNext10(){
-        viewModel?.onTabNext10(player: self.player)
+    private func onTapNext10() {
+        playerVM?.onTabNext10(player: self.player)
     }
     
     @objc
-    private func onTapPlay(){
-        viewModel?.onTabPlay(player: self.player)
+    private func onTapPlay() {
+        playerVM?.onTabPlay(player: self.player)
     }
     
     @objc
@@ -150,14 +152,14 @@ class MainViewController: UIViewController{
     
     deinit{
         print("MainViewController - deinit")
-        viewModel = nil
+        playerVM = nil
         removeObservers()
     }
 
 }
 
-extension MainViewController{
-    private func setVideoPlayer(){
+extension MainViewController {
+    private func setVideoPlayer() {
        
         guard let url = URL(string: TestVideoLinks.link2) else {return}
         
@@ -180,12 +182,12 @@ extension MainViewController{
         self.videoBackgroundView.layer.addSublayer(layer)
         self.playerLayer = layer
         
-        self.viewModel?.setObserverToPlayer(player: self.player){
+        self.playerVM?.setObserverToPlayer(player: self.player){
             self.setUI()
         }
     }
     
-    private func setUI(){
+    private func setUI() {
         
         slider.addTarget(self, action: #selector(onTapSlider), for: .valueChanged)
         
@@ -255,7 +257,7 @@ extension MainViewController{
 }
 
 
-extension MainViewController: PlayerViewModelProtocol{
+extension MainViewController: PlayerViewModelProtocol {
     func changSliderValue(_ value: Float) {
         self.slider.value = value
     }

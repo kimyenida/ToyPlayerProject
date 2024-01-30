@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class OneVideoCell: UICollectionViewCell{
+class OneVideoCell: UICollectionViewCell {
     static let reuseId = "VideoCell"
 
     
@@ -62,14 +62,14 @@ class OneVideoCell: UICollectionViewCell{
         }
     }
     
-    func configure(title:String, sub:String, imagelink: String?){
+    func configure(title:String, sub:String, imagelink: String?) {
         guard let imagelink = imagelink else { return }
         titlelb.text = title
         sublb.text = sub
         thumbnailImageView.loadImage(imageUrl: imagelink)
     }
     
-    private func setupLayout(){
+    private func setupLayout() {
         contentView.addSubview(titlelb)
         contentView.addSubview(sublb)
         contentView.addSubview(thumbnailImageView)

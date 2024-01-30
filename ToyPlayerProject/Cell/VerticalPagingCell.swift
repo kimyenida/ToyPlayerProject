@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol VerticalPagingCellProtocol{
+protocol VerticalPagingCellProtocol {
     func nowCellSelected(indexPath: IndexPath)
     func previousCellSelected(scode:String?, _ completion: () -> ())
     func refreshCell()
@@ -21,7 +21,7 @@ enum Dimension {
     static let contentSpacing: CGFloat = 14
 }
 
-class VerticalPagingCell: UICollectionViewCell{
+class VerticalPagingCell: UICollectionViewCell {
     
     var delegate: VerticalPagingCellProtocol?
     
@@ -82,7 +82,7 @@ class VerticalPagingCell: UICollectionViewCell{
     }
     
     @objc
-    private func refreshView(){
+    private func refreshView() {
         DispatchQueue.main.async {
             self.delegate?.refreshCell()
             self.videoCollectionView.refreshControl?.endRefreshing()
@@ -93,7 +93,7 @@ class VerticalPagingCell: UICollectionViewCell{
     
 
 }
-extension VerticalPagingCell{
+extension VerticalPagingCell {
     private func setupLayout(){
         contentView.addSubview(videoCollectionView)
         videoCollectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -105,7 +105,7 @@ extension VerticalPagingCell{
     }
 }
 
-extension VerticalPagingCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+extension VerticalPagingCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return channelData.count

@@ -4,11 +4,11 @@
 //
 //  Created by Admin iMBC on 1/18/24.
 //
-
+//
 import Foundation
 import UIKit
 
-class TabBarCell: UICollectionViewCell{
+class TabBarCell: UICollectionViewCell {
     static let identifier = "PagingTabBarCell"
     
     var titleLabel : UILabel = {
@@ -26,7 +26,7 @@ class TabBarCell: UICollectionViewCell{
         return view
     }()
     
-    override var isSelected: Bool{
+    override var isSelected: Bool {
         didSet{
             titleLabel.textColor = isSelected ? .black : .lightGray
             underline.alpha = isSelected ? 1.0 : 0.0
@@ -41,12 +41,14 @@ class TabBarCell: UICollectionViewCell{
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupView(title: String){
+    func setupView(title: String) {
         titleLabel.text = title
     }
+    
+    
 }
 
-private extension TabBarCell{
+private extension TabBarCell {
     func setupLayout(){
         contentView.addSubview(titleLabel)
         contentView.addSubview(underline)

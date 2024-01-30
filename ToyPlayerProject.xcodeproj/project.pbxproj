@@ -39,6 +39,19 @@
 		9DD313FE2B5512BF0038ACAB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD313FD2B5512BF0038ACAB /* SceneDelegate.swift */; };
 		9DD314052B5512C10038ACAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DD314042B5512C10038ACAB /* Assets.xcassets */; };
 		9DD314082B5512C10038ACAB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DD314062B5512C10038ACAB /* LaunchScreen.storyboard */; };
+		9DDCD0022B678E3E00710FE0 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDCD0012B678E3E00710FE0 /* AppCoordinator.swift */; };
+		9DDCD0052B678E7100710FE0 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDCD0042B678E7100710FE0 /* BaseCoordinator.swift */; };
+		9DDCD0072B678E7C00710FE0 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDCD0062B678E7C00710FE0 /* Route.swift */; };
+		9DDCD0092B678E8900710FE0 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDCD0082B678E8900710FE0 /* Coordinator.swift */; };
+		9DDCD00B2B678E9300710FE0 /* WeakErased.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDCD00A2B678E9300710FE0 /* WeakErased.swift */; };
+		9DDCD00D2B678E9A00710FE0 /* StrongRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDCD00C2B678E9A00710FE0 /* StrongRouter.swift */; };
+		9DDCD00F2B678EA800710FE0 /* Presentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDCD00E2B678EA800710FE0 /* Presentable.swift */; };
+		9DDCD0112B678EB400710FE0 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDCD0102B678EB400710FE0 /* Transition.swift */; };
+		9DDCD0132B678EBF00710FE0 /* TransitionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDCD0122B678EBF00710FE0 /* TransitionProtocol.swift */; };
+		9DDCD0152B678F0B00710FE0 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDCD0142B678F0B00710FE0 /* UIViewController+Extension.swift */; };
+		9DDCD0172B678F5200710FE0 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDCD0162B678F5200710FE0 /* Router.swift */; };
+		9DDCD0192B67906800710FE0 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDCD0182B67906800710FE0 /* Container.swift */; };
+		9DDCD0292B67944100710FE0 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDCD0282B67944100710FE0 /* MainViewModel.swift */; };
 		9DF73C492B5F52C200AC2217 /* ChannelInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF73C482B5F52C200AC2217 /* ChannelInfo.swift */; };
 		9DFB843A2B564ECC00A7C688 /* PlayerNewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFB84392B564ECC00A7C688 /* PlayerNewViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -78,6 +91,19 @@
 		9DD314042B5512C10038ACAB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9DD314072B5512C10038ACAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9DD314092B5512C10038ACAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9DDCD0012B678E3E00710FE0 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		9DDCD0042B678E7100710FE0 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
+		9DDCD0062B678E7C00710FE0 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		9DDCD0082B678E8900710FE0 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		9DDCD00A2B678E9300710FE0 /* WeakErased.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakErased.swift; sourceTree = "<group>"; };
+		9DDCD00C2B678E9A00710FE0 /* StrongRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrongRouter.swift; sourceTree = "<group>"; };
+		9DDCD00E2B678EA800710FE0 /* Presentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presentable.swift; sourceTree = "<group>"; };
+		9DDCD0102B678EB400710FE0 /* Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
+		9DDCD0122B678EBF00710FE0 /* TransitionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionProtocol.swift; sourceTree = "<group>"; };
+		9DDCD0142B678F0B00710FE0 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		9DDCD0162B678F5200710FE0 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		9DDCD0182B67906800710FE0 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
+		9DDCD0282B67944100710FE0 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		9DF73C482B5F52C200AC2217 /* ChannelInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelInfo.swift; sourceTree = "<group>"; };
 		9DFB84392B564ECC00A7C688 /* PlayerNewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerNewViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -204,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				9DC33A7D2B5FB25C00EBDCCB /* String+Extension.swift */,
+				9DDCD0142B678F0B00710FE0 /* UIViewController+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -232,6 +259,8 @@
 				9DD314042B5512C10038ACAB /* Assets.xcassets */,
 				9DD314062B5512C10038ACAB /* LaunchScreen.storyboard */,
 				9DD314092B5512C10038ACAB /* Info.plist */,
+				9DDCD0032B678E6100710FE0 /* XCoordinator */,
+				9DDCD0002B678E1A00710FE0 /* Coordinator */,
 				9DC33A7C2B5FB24D00EBDCCB /* Extension */,
 				9DBE067D2B5A3AD800B53C33 /* Service */,
 				9DBE06702B5A366C00B53C33 /* Utils */,
@@ -246,11 +275,37 @@
 			path = ToyPlayerProject;
 			sourceTree = "<group>";
 		};
+		9DDCD0002B678E1A00710FE0 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				9DDCD0012B678E3E00710FE0 /* AppCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		9DDCD0032B678E6100710FE0 /* XCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				9DDCD0042B678E7100710FE0 /* BaseCoordinator.swift */,
+				9DDCD0062B678E7C00710FE0 /* Route.swift */,
+				9DDCD0082B678E8900710FE0 /* Coordinator.swift */,
+				9DDCD00A2B678E9300710FE0 /* WeakErased.swift */,
+				9DDCD00C2B678E9A00710FE0 /* StrongRouter.swift */,
+				9DDCD00E2B678EA800710FE0 /* Presentable.swift */,
+				9DDCD0102B678EB400710FE0 /* Transition.swift */,
+				9DDCD0122B678EBF00710FE0 /* TransitionProtocol.swift */,
+				9DDCD0162B678F5200710FE0 /* Router.swift */,
+				9DDCD0182B67906800710FE0 /* Container.swift */,
+			);
+			path = XCoordinator;
+			sourceTree = "<group>";
+		};
 		9DFB84372B564EB200A7C688 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				9DFB84392B564ECC00A7C688 /* PlayerNewViewModel.swift */,
 				9D88B8C22B5E42BB007390A1 /* PagingViewModel.swift */,
+				9DDCD0282B67944100710FE0 /* MainViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -333,6 +388,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DDCD0022B678E3E00710FE0 /* AppCoordinator.swift in Sources */,
 				9D8A344A2B58BCEE005AD111 /* MainViewController.swift in Sources */,
 				9DBE06762B5A370400B53C33 /* AdInfoForm.swift in Sources */,
 				9DBE06842B5A3B6500B53C33 /* ResponseError.swift in Sources */,
@@ -340,6 +396,8 @@
 				9DBE068B2B5A3C0E00B53C33 /* Parameters.swift in Sources */,
 				9D218ACB2B5DF3FC0010D04A /* OneVideoCell.swift in Sources */,
 				9DBE067F2B5A3B1A00B53C33 /* StreamAPIProcess.swift in Sources */,
+				9DDCD0092B678E8900710FE0 /* Coordinator.swift in Sources */,
+				9DDCD0192B67906800710FE0 /* Container.swift in Sources */,
 				9D25A8BA2B576DBB000E4FCF /* TestVideoLinks.swift in Sources */,
 				9DD313FC2B5512BF0038ACAB /* AppDelegate.swift in Sources */,
 				9DFB843A2B564ECC00A7C688 /* PlayerNewViewModel.swift in Sources */,
@@ -349,14 +407,23 @@
 				9DBE06812B5A3B2C00B53C33 /* APIProcess.swift in Sources */,
 				9DC33A7E2B5FB25C00EBDCCB /* String+Extension.swift in Sources */,
 				9DBE06902B5A3C6500B53C33 /* NetworkDomain.swift in Sources */,
+				9DDCD0152B678F0B00710FE0 /* UIViewController+Extension.swift in Sources */,
+				9DDCD0072B678E7C00710FE0 /* Route.swift in Sources */,
 				9DD313FE2B5512BF0038ACAB /* SceneDelegate.swift in Sources */,
 				9DBE06882B5A3BE700B53C33 /* EndPointType.swift in Sources */,
 				9DBE066C2B5A361C00B53C33 /* PlayViewerType.swift in Sources */,
 				9DBE06952B5A417700B53C33 /* ControlAPI.swift in Sources */,
+				9DDCD00F2B678EA800710FE0 /* Presentable.swift in Sources */,
 				9D8A34562B58F7AF005AD111 /* PagingView.swift in Sources */,
 				9DBE06722B5A367400B53C33 /* Util.swift in Sources */,
+				9DDCD00D2B678E9A00710FE0 /* StrongRouter.swift in Sources */,
+				9DDCD0052B678E7100710FE0 /* BaseCoordinator.swift in Sources */,
 				9D68F4052B5FA0F6001DA94F /* VerticalPagingCell.swift in Sources */,
+				9DDCD0172B678F5200710FE0 /* Router.swift in Sources */,
+				9DDCD00B2B678E9300710FE0 /* WeakErased.swift in Sources */,
+				9DDCD0112B678EB400710FE0 /* Transition.swift in Sources */,
 				9DBE066F2B5A365100B53C33 /* IHandlerCommend.swift in Sources */,
+				9DDCD0292B67944100710FE0 /* MainViewModel.swift in Sources */,
 				9D8A345E2B590806005AD111 /* LiveInfoView.swift in Sources */,
 				9D9B25AB2B60C97C00F09254 /* ImageURL.swift in Sources */,
 				9D9B25A72B608C1800F09254 /* CustomImageView.swift in Sources */,
@@ -364,6 +431,7 @@
 				9D8A34582B58FAAF005AD111 /* TabBarCell.swift in Sources */,
 				9DBE068E2B5A3C4200B53C33 /* StreamAPI.swift in Sources */,
 				9D8A34542B58F447005AD111 /* PagingTabBarView.swift in Sources */,
+				9DDCD0132B678EBF00710FE0 /* TransitionProtocol.swift in Sources */,
 				9DBE067C2B5A3A5B00B53C33 /* OnAirChannelList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
