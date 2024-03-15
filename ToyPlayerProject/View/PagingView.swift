@@ -92,7 +92,6 @@ extension PagingView: UICollectionViewDelegateFlowLayout {
     }
 
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        
         let distance = abs(targetContentOffset.pointee.x - initialContentOffset)
         if distance < UIScreen.main.bounds.width { // 스크롤이 다음 셀로 넘어가지 않은경우, return
             return
@@ -100,13 +99,9 @@ extension PagingView: UICollectionViewDelegateFlowLayout {
         let indexPath = IndexPath(row: Int(targetContentOffset.pointee.x / UIScreen.main.bounds.width), section: 0)
         pagingTabBar.tabBarCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
         currentTab = indexPath.item
-
         refreshCell()
     }
-
-
 }
-
 
 extension PagingView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -76,6 +76,7 @@ extension MainViewModel {
                 guard let playerType = type else {
                     return
                 }
+                self.router.trigger(.video, completion: {})
                 
                 /////////////구현필요.....!!!!!!!!!!
             }

@@ -8,9 +8,7 @@
 import Foundation
 import UIKit
 
-
 class CustomImageView: UIImageView {
-
 
     var task: URLSessionDataTask!
     var imageCache = NSCache<AnyObject, AnyObject>()

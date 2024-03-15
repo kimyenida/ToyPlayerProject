@@ -144,6 +144,7 @@ extension VerticalPagingCell: UICollectionViewDelegate, UICollectionViewDataSour
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.nowCellSelected(indexPath: indexPath)
+
     }
 }
 

@@ -39,3 +39,4 @@ extension Presentable {
             && viewController.children.allSatisfy { $0.canBeRemovedAsChild() }
     }
 }
+

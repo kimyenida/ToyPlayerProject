@@ -11,6 +11,7 @@ import UIKit
 
 enum AppRoute: Route {
     case launch
+    case video
 }
 class AppCoordinator: BaseCoordinator<AppRoute> {
     let window: UIWindow
@@ -32,6 +33,8 @@ class AppCoordinator: BaseCoordinator<AppRoute> {
         switch route {
         case .launch:
             window.rootViewController = viewController
+            return .none()
+        case .video:
             return .none()
         }
     }

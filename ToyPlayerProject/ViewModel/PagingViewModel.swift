@@ -15,8 +15,6 @@ class PagingViewModel {
     private var channelList : [ChannelInfo] = []
     private let networking = OnAirAPIProcess()
     
-    
-    
     var mbicList : [ChannelInfo] = []
     var tvList : [ChannelInfo] = []
     

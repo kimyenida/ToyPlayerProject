@@ -16,21 +16,21 @@ protocol PlayerViewModelProtocol {
 
 }
 class PlayerNewViewModel {
+    
     var delegate: PlayerViewModelProtocol?
+    
     private var isTumbSeek : Bool = false //사용자가 슬라이더를 움직이고 있음을 나타내는 변수
     private var timeObserver : Any? = nil
     
-    public func setObserverToPlayer(player: AVPlayer?,completion: @escaping ()->()) {
+    public func setObserverToPlayer(player: AVPlayer?, completion: @escaping ()->()) {
         // 0.3초마다 Player가 반응하게
         let interval = CMTime(seconds: 0.3, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-        timeObserver = player?.addPeriodicTimeObserver(forInterval: interval, queue: .main, using: {elapsed in
+        timeObserver = player?.addPeriodicTimeObserver(forInterval: interval, queue: .main, using: { elapsed in
             self.updateSliderTime(elapsed, player, completion)
         })
     }
-    
-  
 
-    public func onTabBack10(player: AVPlayer?) {
+    public func onTapBack10(player: AVPlayer?) {
         guard let currentTime = player?.currentTime() else { return }
 
         let seekTime10Sec = CMTimeGetSeconds(currentTime).advanced(by: -10)
@@ -39,7 +39,7 @@ class PlayerNewViewModel {
         })
     }
     
-    public func onTabNext10(player: AVPlayer?) {
+    public func onTapNext10(player: AVPlayer?) {
         guard let currentTime = player?.currentTime() else { return }
 
         let seekTime10Sec = CMTimeGetSeconds(currentTime).advanced(by: 10)
@@ -48,8 +48,7 @@ class PlayerNewViewModel {
         })
     }
     
-    public func onTabPlay(player: AVPlayer?) {
-        
+    public func onTapPlay(player: AVPlayer?) {
         if player?.timeControlStatus == .playing {
             delegate?.changeImage("pause")
             player?.pause()
@@ -60,7 +59,7 @@ class PlayerNewViewModel {
         }
     }
     
-    public func onTabPlayerSlider(player: AVPlayer?, sliderValue: Float64) {
+    public func onTapPlayerSlider(player: AVPlayer?, sliderValue: Float64) {
         self.isTumbSeek = true
         guard let duration = player?.currentItem?.duration else { return } // 총 재생시간
         let value = Float64(sliderValue) * CMTimeGetSeconds(duration) // 얼만큼 재생시간 되었는지(슬라이더 움직일 때 마다 계속 값이 바뀔것임)
@@ -78,7 +77,6 @@ class PlayerNewViewModel {
     public func updateSliderTime(_ currentTime:CMTime,_ player : AVPlayer?, _ completion: @escaping ()->()) {
         guard let currentTime = player?.currentTime() else { return }
         guard let duration = player?.currentItem?.duration else { return }
-
 
         let currentTimeInSecond = CMTimeGetSeconds(currentTime)
         let durationTimeInSecond = CMTimeGetSeconds(duration)
@@ -98,6 +96,7 @@ class PlayerNewViewModel {
         guard let housStr = timeformatter.string(from: NSNumber(value: hours)), let minStr = timeformatter.string(from: NSNumber(value: mins)), let secsStr = timeformatter.string(from: NSNumber(value: secs)) else {
             return
         }
+        
         delegate?.changelLabel("\(housStr):\(minStr):\(secsStr)")
         
         hours = durationTimeInSecond / 3600
@@ -119,3 +118,6 @@ class PlayerNewViewModel {
         timeObserver = nil
     }
 }
+
+
+

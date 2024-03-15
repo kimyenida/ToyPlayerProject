@@ -8,12 +8,10 @@
 import Foundation
 import AVFoundation
 import UIKit
-import AVKit
 
 class MainViewController: UIViewController {
     private var player: AVPlayer?
     private var playerLayer: AVPlayerLayer?
-    private let links = [TestVideoLinks.link1,TestVideoLinks.link2,TestVideoLinks.link3]
     
     var heightConstraint: NSLayoutConstraint?
 
@@ -82,7 +80,6 @@ class MainViewController: UIViewController {
         self.addObservers()
         self.setVideoPlayer()
     }
-  
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -125,27 +122,26 @@ class MainViewController: UIViewController {
 
     @objc
     private func onTapSlider() {
-        playerVM?.onTabPlayerSlider(player: self.player, sliderValue: Float64(slider.value))
+        playerVM?.onTapPlayerSlider(player: self.player, sliderValue: Float64(slider.value))
     }
     
     @objc
     private func onTapBack10() {
-        playerVM?.onTabBack10(player: self.player)
+        playerVM?.onTapBack10(player: self.player)
     }
     
     @objc
     private func onTapNext10() {
-        playerVM?.onTabNext10(player: self.player)
+        playerVM?.onTapNext10(player: self.player)
     }
     
     @objc
     private func onTapPlay() {
-        playerVM?.onTabPlay(player: self.player)
+        playerVM?.onTapPlay(player: self.player)
     }
     
     @objc
     private func playerDidFinishPlaying(note: NSNotification) {
-        print("the end \n")
         player?.pause()
         //slider.value = 1
         changeImage("pause")
@@ -274,8 +270,6 @@ extension MainViewController: PlayerViewModelProtocol {
     func changeImage(_ kind: String) {
         self.playBtn.image = UIImage(systemName: kind)
     }
-    
-    
 }
 
 
@@ -287,6 +281,4 @@ extension MainViewController: LivaInfoViewProtocol {
     func givedata(data: ChannelInfo) {
         self.mainVM?.trigger(chInfo: data)
     }
-    
-    
 }
